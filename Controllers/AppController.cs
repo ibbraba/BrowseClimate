@@ -53,7 +53,7 @@ namespace BrowseClimate.Controllers
             return "Single story";
         }
 
-     
+             
 
 
     }
