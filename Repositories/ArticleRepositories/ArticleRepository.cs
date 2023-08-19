@@ -38,7 +38,7 @@ namespace BrowseClimate.Repositories.ArticleRepositories
             using (IDbConnection db = DBHelper.connectToDB())
             {
 
-                var output = await db.QueryAsync<Article>("SpArticle_GetAllArticles", commandType: CommandType.StoredProcedure);
+                var output = await db.QueryAsync<Article>("dbo.SpArticle_GetAllArticles", commandType: CommandType.StoredProcedure);
                 return output.ToList();
 
             }
