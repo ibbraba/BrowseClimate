@@ -4,7 +4,7 @@ namespace BrowseClimate.Services.UserServices
 {
     public interface IUserService
     {
-        void GetUser(User user);
+        User GetUser(int id);
         void CreateUser(User user);
 
         void UpdateUser(User user);
@@ -13,9 +13,9 @@ namespace BrowseClimate.Services.UserServices
 
         void VerifiyUser(User user);
 
-        void EncryptUserPassword(User user);
+        string EncryptUserPassword(string password);
 
-        void LoginUser(string pseudo, string password);
+        User FindUserWithPseudo(string pseudo);
 
         void ValidatePassword(User user);
 

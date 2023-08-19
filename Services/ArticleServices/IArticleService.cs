@@ -9,6 +9,9 @@ namespace BrowseClimate.Services.ArticleServices
         Article GetArticle(int id);
 
         void UpdateArticle(Article article);
-        void DeleteArticle(Article article); 
+        void DeleteArticle(Article article);
+
+        void RateArticle(User user, int note);
+
     }
 }

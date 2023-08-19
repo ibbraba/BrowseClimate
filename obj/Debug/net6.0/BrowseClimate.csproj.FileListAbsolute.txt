@@ -30,3 +30,4 @@ C:\Users\33651\Desktop\.NET projects\BrowseClimate\obj\Debug\net6.0\refint\Brows
 C:\Users\33651\Desktop\.NET projects\BrowseClimate\obj\Debug\net6.0\BrowseClimate.pdb
 C:\Users\33651\Desktop\.NET projects\BrowseClimate\obj\Debug\net6.0\BrowseClimate.genruntimeconfig.cache
 C:\Users\33651\Desktop\.NET projects\BrowseClimate\obj\Debug\net6.0\ref\BrowseClimate.dll
+C:\Users\33651\Desktop\.NET projects\BrowseClimate\bin\Debug\net6.0\Dapper.dll

@@ -1,6 +1,15 @@
-﻿namespace BrowseClimate.Repositories.UserRepositories
+﻿using BrowseClimate.Models;
+
+namespace BrowseClimate.Repositories.UserRepositories
 {
-    public class IUserRepository
+    public interface IUserRepository
     {
+        Task CreateUser(User user); 
+
+        Task<User> GetUser(int id);
+
+        Task UpdateUser(User user);
+        Task DeleteUser(int id);
+
     }
 }

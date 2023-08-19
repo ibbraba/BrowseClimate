@@ -4,13 +4,16 @@ namespace BrowseClimate.Repositories.ArticleRepositories
 {
     public interface IArticleRepository
     {
-        void CreateArticle(Article article);
+        Task CreateArticle(Article article);
 
-        Article GetArticle(int id);
+        Task<Article> GetArticle(int id);
+
+        Task<List<Article>> GetAllArticles();
         
-        void UpdateArticle (Article article);   
+        Task UpdateArticle (Article article);   
 
-        void DeleteArticle(int id); 
+        Task DeleteArticle(int id); 
+
 
 
     }

@@ -11,7 +11,7 @@ namespace BrowseClimate.Controllers
         [Route ("Index")]
         public string Index()
         {
-            return "hello world"; 
+            return DateTime.Now.ToString(); 
         }
 
         [HttpGet]

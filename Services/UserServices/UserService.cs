@@ -1,10 +1,10 @@
 ﻿using BrowseClimate.Models;
 
-namespace BrowseClimate.Services
+namespace BrowseClimate.Services.UserServices
 {
     public class UserService : IUserService
     {
-         
+
 
         public void CreateUser(User user)
         {
@@ -26,15 +26,8 @@ namespace BrowseClimate.Services
             throw new NotImplementedException();
         }
 
-        public void GetUser(User user)
-        {
-            throw new NotImplementedException();
-        }
+     
 
-        public void LoginUser(string pseudo, string password)
-        {
-            throw new NotImplementedException();
-        }
 
         public void ValidatePassword(User user)
         {
@@ -42,6 +35,21 @@ namespace BrowseClimate.Services
         }
 
         public void VerifiyUser(User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public User GetUser(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string EncryptUserPassword(string password)
+        {
+            throw new NotImplementedException();
+        }
+
+        public User FindUserWithPseudo(string pseudo)
         {
             throw new NotImplementedException();
         }
