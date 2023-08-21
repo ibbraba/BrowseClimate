@@ -13,10 +13,10 @@ namespace BrowseClimate.Helpers
 
 
         //  METHOD TO CONNECT TO DB
-        public static IDbConnection connectToDB(string dbname)
+        public static IDbConnection connectToDB()
         {
            
-            IDbConnection connection = new SqlConnection(connectionString);
+            IDbConnection connection = new SqlConnection(_connectionString);
 
             return connection;
 

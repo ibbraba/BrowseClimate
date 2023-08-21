@@ -50,7 +50,7 @@ namespace BrowseClimate.Repositories.CityRepositories
         {
             using (System.Data.IDbConnection db = DBHelper.connectToDB())
             {
-                var output = await db.QuerySingleAsync<City>("dbo.SpCity_FindCityWithId", new { id }, commandType: CommandType.StoredProcedure);
+                var output = await db.QuerySingleOrDefaultAsync<City>("dbo.SpCity_FindCityWithId", new { id }, commandType: CommandType.StoredProcedure);
                 return output;
             }
         }

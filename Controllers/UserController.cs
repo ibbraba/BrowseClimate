@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BrowseClimate.Models;
+using BrowseClimate.Services.UserServices;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualBasic;
 
 namespace BrowseClimate.Controllers
 {
@@ -7,12 +10,70 @@ namespace BrowseClimate.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+        private UserService _userService;
+
+        public UserController()
+        {
+            _userService = new UserService();
+        }
+
+
         [HttpGet]
         [Route("MyPage")]
         public string MyPage(int id)
         {
             return "Profile page";
         }
+
+
+        [HttpPost]
+        [Route("Create")]
+        public async Task<IActionResult> CreateUser(User user)
+        {
+            try {
+
+                _userService.CreateUser(user);
+                return Ok(user);
+            } catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+        }
+
+
+        [HttpPost]
+        [Route("login")]
+        public async Task<IActionResult> LoginUser(string pseudo, string password)
+        {
+            // CREATE LOGIN IN USER SERVICE 
+
+            try
+            {
+                User user = await _userService.LoginUser(pseudo, password);
+                if (user != null)
+                {
+                    return Ok(user);
+                }else return BadRequest("User not found ");
+
+            }
+            catch 
+            {
+                return BadRequest("Unable to connect to the server");
+            }
+
+
+        }
+
+        [HttpGet]
+        [Route("testerror")]
+        public async Task<IActionResult> TestError()
+        {
+
+            _userService.TestError();
+            return BadRequest("check");
+        }
+        
 
     }
 }

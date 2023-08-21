@@ -4,20 +4,22 @@ namespace BrowseClimate.Services.UserServices
 {
     public interface IUserService
     {
-        User GetUser(int id);
-        void CreateUser(User user);
+        Task<User> GetUser(int id);
+        Task CreateUser(User user);
 
-        void UpdateUser(User user);
+        Task UpdateUser(User user);
 
-        void DeleteUser(User user);
+        Task DeleteUser(User user);
 
-        void VerifiyUser(User user);
+        void ValidateUser(User user);
 
         string EncryptUserPassword(string password);
 
-        User FindUserWithPseudo(string pseudo);
+        Task<User> FindUserWithPseudo(string pseudo);
 
         void ValidatePassword(User user);
+
+        Task<User> LoginUser(string login, string password);
 
 
 

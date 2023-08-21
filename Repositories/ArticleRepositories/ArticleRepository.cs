@@ -49,7 +49,7 @@ namespace BrowseClimate.Repositories.ArticleRepositories
             using (IDbConnection db = DBHelper.connectToDB())
             {
 
-                var output = await db.QuerySingleAsync<Article>("dbo.SpArticle_FindArticleWithId", new { id }, commandType: CommandType.StoredProcedure);
+                var output = await db.QuerySingleOrDefaultAsync<Article>("dbo.SpArticle_FindArticleWithId", new { id }, commandType: CommandType.StoredProcedure);
                 return output;
             }
 

@@ -1,30 +1,45 @@
 ﻿using BrowseClimate.Models;
+using BrowseClimate.Repositories.UserRepositories;
 
 namespace BrowseClimate.Services.UserServices
 {
     public class UserService : IUserService
     {
+        private IUserRepository _userRepository;
 
-
-        public void CreateUser(User user)
+        public UserService()
         {
-            throw new NotImplementedException();
+            _userRepository = new UserRepository();
         }
 
-        public void DeleteUser(User user)
+        public UserService(IUserRepository userRepository)
         {
-            throw new NotImplementedException();
+
+            _userRepository = userRepository;
+
         }
 
-        public void UpdateUser(User user)
+        public async Task CreateUser(User user)
         {
-            throw new NotImplementedException();
+            ValidateUser(user);
+            //ENCRYPT Password
+            user.Role = UserRolesEnum.ROLE_USER;
+            user.CreatedAt = DateTime.Now;
+
+            await _userRepository.CreateUser(user);
         }
 
-        public void EncryptUserPassword(User user)
+        public async Task DeleteUser(User user)
         {
-            throw new NotImplementedException();
+            await _userRepository.DeleteUser(user.Id);
         }
+
+        public async Task UpdateUser(User user)
+        {
+            
+            await _userRepository.UpdateUser(user); 
+        }
+
 
      
 
@@ -34,14 +49,15 @@ namespace BrowseClimate.Services.UserServices
             throw new NotImplementedException();
         }
 
-        public void VerifiyUser(User user)
+        public void ValidateUser(User user)
         {
-            throw new NotImplementedException();
+
         }
 
-        public User GetUser(int id)
+        public async Task<User> GetUser(int id)
         {
-            throw new NotImplementedException();
+           User user = await _userRepository.GetUser(id);
+            return user;
         }
 
         public string EncryptUserPassword(string password)
@@ -49,9 +65,36 @@ namespace BrowseClimate.Services.UserServices
             throw new NotImplementedException();
         }
 
-        public User FindUserWithPseudo(string pseudo)
+
+
+        
+        public async Task<User> FindUserWithPseudo(string pseudo)
         {
-            throw new NotImplementedException();
+            User user = await _userRepository.FindOneWithPseudo(pseudo);
+            return user;
+        }
+
+        public async Task<User> LoginUser(string login, string password)
+        {
+           
+             User user = await FindUserWithPseudo(login);
+
+            if (user != null)
+            {
+                if (user.Password == password)
+                {
+                    return user;
+                }
+                else return null;
+            } else return null;
+        }
+
+        public void TestError()
+        {
+            throw new Exception("test error in req");
+            
+            
+
         }
     }
 }

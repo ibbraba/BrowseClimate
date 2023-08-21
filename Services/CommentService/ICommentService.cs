@@ -4,15 +4,17 @@ namespace BrowseClimate.Services.CommentService
 {
     public interface ICommentService
     {
-        void CreateComment( Comment comment);
+         Task CreateComment( Comment comment);
 
-        Comment GetComment(int id);
+        Task<Comment> GetComment(int id);
 
-        void UpdateComment (Comment comment );
+        Task UpdateComment (Comment comment );
 
-        void DeleteComment(int id); 
+        Task DeleteComment(int id); 
 
+        void ValidateComment(Comment comment);
 
+        Task<List<Comment>> GetAllCommentsForArticle(Article article);
 
     }
 }

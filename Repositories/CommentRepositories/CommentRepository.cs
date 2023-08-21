@@ -50,7 +50,7 @@ namespace BrowseClimate.Repositories.CommentRepositories
         {
             using (IDbConnection db = DBHelper.connectToDB())
             {
-                var output = await db.QuerySingleAsync<Comment>("dbo.SpComment_DeleteComment", new { id }, commandType: CommandType.StoredProcedure);
+                var output = await db.QuerySingleOrDefaultAsync<Comment>("dbo.SpComment_DeleteComment", new { id }, commandType: CommandType.StoredProcedure);
                 return output;
 
             }

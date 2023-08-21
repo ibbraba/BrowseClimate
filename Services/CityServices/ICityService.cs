@@ -4,12 +4,14 @@ namespace BrowseClimate.Services.CityServices
 {
     public interface ICityService
     {
-        void CreateCity(City city);
-        City GetCity(int id);
+        Task CreateCity(City city);
+        Task<City> GetCity(int id);
 
-        void UpdateCity(City city);
-        void DeleteCity(City city);
+        Task UpdateCity(City city);
+        Task DeleteCity(City city);
+        void ValidateCity(City city);
 
+        Task<List<City>> GetAllCities();
 
 
     }

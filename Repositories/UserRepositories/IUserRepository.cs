@@ -11,5 +11,7 @@ namespace BrowseClimate.Repositories.UserRepositories
         Task UpdateUser(User user);
         Task DeleteUser(int id);
 
+        Task<User> FindOneWithPseudo(string pseudo);
+
     }
 }
