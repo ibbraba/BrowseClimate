@@ -54,7 +54,7 @@ namespace BrowseClimate.Repositories.UserRepositories
         {
             using (IDbConnection db = DBHelper.connectToDB())
             {
-                var output = await db.QuerySingleAsync<User>("dbo.SpUsers_FindUserWithId", new { id }, commandType: CommandType.StoredProcedure); 
+                var output = await db.QuerySingleOrDefaultAsync<User>("dbo.SpUsers_FindUserWithId", new { id }, commandType: CommandType.StoredProcedure); 
                 return output;
             }
         }

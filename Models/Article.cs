@@ -9,7 +9,7 @@
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         
-        public User CreatedBy { get; set; }
+        public int CreatedBy { get; set; }
 
         public bool isAdminArticle { get; set; }
 
@@ -17,6 +17,6 @@
 
         public int Views { get; set; }
 
-        public List<Comment> Comments { get; set; } 
+        public List<Comment> Comments = new List<Comment>();
     }
 }

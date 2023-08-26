@@ -81,7 +81,7 @@ namespace BrowseClimate.Services.UserServices
 
             if (user != null)
             {
-                if (user.Password == password)
+                if (user.Password.Trim() == password)
                 {
                     return user;
                 }

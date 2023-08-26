@@ -9,7 +9,7 @@ namespace BrowseClimate.Repositories.ArticleRepositories
     {
         public async Task CreateArticle(Article article)
         {
-            int createdBy = article.CreatedBy.Id;
+            int createdBy = article.CreatedBy;
             string title = article.Title;
             string description = article.Description;
             string content = article.Content;
