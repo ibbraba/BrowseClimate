@@ -10,9 +10,14 @@ namespace BrowseClimate.Repositories.CityRepositories
 {
     public class CityRepository : ICityRepository
     {
+       
+
         public async Task CreateCity(City city)
         {
             
+
+            
+
             string name = city.Name; 
             string country = city.Country;
             int numberResidents = city.NumberResidents;

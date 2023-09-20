@@ -1,22 +1,34 @@
 ﻿using Microsoft.Data.SqlClient;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using System.Data;
 using System.Globalization;
+using Microsoft.Extensions.Configuration;
 
 namespace BrowseClimate.Helpers
 {
     public static class DBHelper
     {
+        
+
+        public static Object _cnn { get; set; }
 
         //  CONNECTION STRING 
 
-        private static string _connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=BrowseClimate;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
 
 
-        //  METHOD TO CONNECT TO DB
+        private static string keyVaultrl = "https://bc-azkw.vault.azure.net/";
+
+
+
+
+
+
+        //  METHOD TO CONNECT TO 
         public static IDbConnection connectToDB()
         {
-           
-            IDbConnection connection = new SqlConnection(_connectionString);
+          
+//            string _connectionString = _configuration.GetValue<string>("KeyVaultURL");
+            IDbConnection connection = new SqlConnection("test");
 
             return connection;
 

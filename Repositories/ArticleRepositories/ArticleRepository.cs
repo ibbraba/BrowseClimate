@@ -7,6 +7,7 @@ namespace BrowseClimate.Repositories.ArticleRepositories
 {
     public class ArticleRepository : IArticleRepository
     {
+    
         public async Task CreateArticle(Article article)
         {
             int createdBy = article.CreatedBy;

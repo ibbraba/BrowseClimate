@@ -11,10 +11,11 @@ namespace BrowseClimate.Controllers
     public class UserController : ControllerBase
     {
         private UserService _userService;
+        private readonly IConfiguration _config;
 
         public UserController()
         {
-            _userService = new UserService();
+            _userService = new UserService(_config);
         }
 
 
@@ -49,18 +50,18 @@ namespace BrowseClimate.Controllers
         {
             // CREATE LOGIN IN USER SERVICE 
 
-            try
-            {
-                User user = await _userService.LoginUser(pseudo, password);
-                if (user != null)
+
+            try{ 
+                string jwt = await _userService.LoginUser(pseudo, password);
+                if (!String.IsNullOrEmpty(jwt))
                 {
-                    return Ok(user);
-                }else return BadRequest("User not found ");
+                    return Ok(jwt);
+                }else return NotFound("User not found ");
 
             }
-            catch 
+            catch (Exception ex)
             {
-                return BadRequest("Unable to connect to the server");
+                return BadRequest(ex.Message);
             }
 
 

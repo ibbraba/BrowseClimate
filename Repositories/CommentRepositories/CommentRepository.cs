@@ -7,6 +7,8 @@ namespace BrowseClimate.Repositories.CommentRepositories
 {
     public class CommentRepository : ICommentRepository
     {
+ 
+
         public async Task CreateComment(Comment comment)
         {
             int userId = comment.CreatedBy.Id;

@@ -2,13 +2,16 @@
 using BrowseClimate.Services.CityServices;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Reflection.Metadata.Ecma335;
 
 namespace BrowseClimate.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class CityController : ControllerBase
     {
         private CityService _cityService;
-
+    
         public CityController ()
         {
             _cityService = new CityService();
@@ -16,7 +19,8 @@ namespace BrowseClimate.Controllers
 
         }
 
-
+        [HttpGet]
+        [Route("Get")]
         public async Task<IActionResult> Get(int id)
         {
             try
@@ -33,6 +37,24 @@ namespace BrowseClimate.Controllers
         }
 
 
+        [HttpGet]
+        [Route("GetAll")]
+        public async Task<IActionResult> GetAllCities()
+        {
+            try
+            {
+                List<City> cities = await _cityService.GetAllCities();
+                return Ok(cities);
+                    
+            }catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+        }
+
+        [HttpPost]
+        [Route("Create")]
         public async Task<IActionResult> Create (City city){
 
             try
@@ -42,12 +64,13 @@ namespace BrowseClimate.Controllers
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                return BadRequest(ex.Message);
             }
 
         }
 
-
+        [HttpPost]
+        [Route("Update")]
         public async Task<IActionResult> Update(City city)
         {
             try
@@ -64,7 +87,8 @@ namespace BrowseClimate.Controllers
         }
 
 
-
+        [HttpPost]
+        [Route("Delete")]
         public async Task<IActionResult> Delete(City city)
         {
             try

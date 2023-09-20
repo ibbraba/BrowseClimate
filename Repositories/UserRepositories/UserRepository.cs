@@ -7,6 +7,8 @@ namespace BrowseClimate.Repositories.UserRepositories
 {
     public class UserRepository : IUserRepository
     {
+
+
         public async Task CreateUser(User user)
         {
 

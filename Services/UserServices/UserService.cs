@@ -1,14 +1,22 @@
 ﻿using BrowseClimate.Models;
 using BrowseClimate.Repositories.UserRepositories;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace BrowseClimate.Services.UserServices
 {
     public class UserService : IUserService
     {
+        private IConfiguration _configuration;
         private IUserRepository _userRepository;
 
-        public UserService()
+
+
+        public UserService(IConfiguration configuration)
         {
+            _configuration = configuration;
             _userRepository = new UserRepository();
         }
 
@@ -74,7 +82,7 @@ namespace BrowseClimate.Services.UserServices
             return user;
         }
 
-        public async Task<User> LoginUser(string login, string password)
+        public async Task<string> LoginUser(string login, string password)
         {
            
              User user = await FindUserWithPseudo(login);
@@ -83,7 +91,8 @@ namespace BrowseClimate.Services.UserServices
             {
                 if (user.Password.Trim() == password)
                 {
-                    return user;
+                     string jwt = CreateToken(user);
+                    return jwt;
                 }
                 else return null;
             } else return null;
@@ -94,6 +103,33 @@ namespace BrowseClimate.Services.UserServices
             throw new Exception("test error in req");
             
             
+
+        }
+
+        public string CreateToken(User user)
+        {
+            List<Claim> claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, user.Pseudo.Trim()), 
+                new Claim(ClaimTypes.Role, user.Role.Trim())
+            };
+
+            var configToken = "Whatever you want as long as it is goood";
+
+
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configToken));
+
+            var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha512);
+
+            var token = new JwtSecurityToken(
+                claims: claims,
+                expires: DateTime.Now.AddHours(5), 
+                signingCredentials: cred
+                ); ;
+
+            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+            return jwt;
 
         }
     }

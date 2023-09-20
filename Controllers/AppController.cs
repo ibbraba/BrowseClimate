@@ -1,17 +1,31 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BrowseClimate.Helpers;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Web.Http.Cors;
 
 namespace BrowseClimate.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
+   // [EnableCors(origins: "http://localhost:5173/", headers: "*", methods: "*")]
     public class AppController : ControllerBase
     {
+        private readonly IConfiguration _configuration;
+
+        public AppController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         [HttpGet]
         [Route ("Index")]
-        public string Index()
+        public IActionResult Index()
         {
-            return DateTime.Now.ToString(); 
+         //Main main = new();
+         //   var data = main.ReadJSON();
+            return Ok(DBHelper._cnn);
         }
 
         [HttpGet]

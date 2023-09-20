@@ -19,9 +19,9 @@ namespace BrowseClimate.Services.UserServices
 
         void ValidatePassword(User user);
 
-        Task<User> LoginUser(string login, string password);
+        Task<string> LoginUser(string login, string password);
 
-
+        string CreateToken(User user);
 
 
     }

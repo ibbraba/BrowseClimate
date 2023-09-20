@@ -39,11 +39,18 @@ namespace BrowseClimate.Services.ArticleServices
 
         public async Task DeleteArticle(Article article)
         {
+
+
             await _articleRepository.DeleteArticle(article.Id); 
         }
 
         public async Task<List<Article>> GetAllArticles()
         {
+            if(_articleRepository == null)
+            {
+                _articleRepository = new ArticleRepository();
+            }
+
             List<Article> articles = await _articleRepository.GetAllArticles();
             return articles;
         }
