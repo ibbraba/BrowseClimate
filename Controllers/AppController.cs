@@ -19,6 +19,8 @@ namespace BrowseClimate.Controllers
             _configuration = configuration;
         }
 
+
+
         [HttpGet]
         [Route ("Index")]
         public IActionResult Index()

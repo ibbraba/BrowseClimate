@@ -3,6 +3,8 @@ using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using System.Data;
 using System.Globalization;
 using Microsoft.Extensions.Configuration;
+using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace BrowseClimate.Helpers
 {
@@ -10,7 +12,7 @@ namespace BrowseClimate.Helpers
     {
         
 
-        public static Object _cnn { get; set; }
+        public static string _cnn { get; set; }
 
         //  CONNECTION STRING 
 
@@ -26,10 +28,13 @@ namespace BrowseClimate.Helpers
         //  METHOD TO CONNECT TO 
         public static IDbConnection connectToDB()
         {
+            string cs = Regex.Unescape(_cnn);
           
 //            string _connectionString = _configuration.GetValue<string>("KeyVaultURL");
-            IDbConnection connection = new SqlConnection("test");
-
+            IDbConnection connection = new SqlConnection(cs);
+        
+            
+       
             return connection;
 
         }

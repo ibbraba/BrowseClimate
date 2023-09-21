@@ -46,8 +46,22 @@ var secret = await client.GetSecretAsync("bclocaldb");
 
 
 
-DBHelper._cnn = secret.Value.Value; 
+string cnn = secret.Value.Value;
 
+Debug.WriteLine(cnn);
+
+DBHelper._cnn = cnn;
+
+
+
+
+
+
+
+
+
+
+Debug.WriteLine ("CS :" +  DBHelper._cnn);
 
 
 
