@@ -10,7 +10,7 @@
         public string Password { get; set; }
         public string Role { get; set; }
         public DateTime CreatedAt { get; set; }
-        public City FavoriteCity { get; set; }
+        public int FavoriteCity { get; set; }
 
 
         public override string ToString()

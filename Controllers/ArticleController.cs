@@ -1,9 +1,11 @@
 ﻿using BrowseClimate.Helpers;
 using BrowseClimate.Models;
 using BrowseClimate.Services.ArticleServices;
+using BrowseClimate.Services.CommentService;
 using BrowseClimate.Services.UserServices;
 
 using Microsoft.AspNetCore.Mvc;
+using System.Runtime.InteropServices;
 
 namespace BrowseClimate.Controllers
 {
@@ -15,6 +17,7 @@ namespace BrowseClimate.Controllers
 
         private readonly IConfiguration _configuration;
         private ArticleService _articleService;
+        private readonly CommentService _commentService;
         private UserService _userService;
 
 
@@ -23,6 +26,7 @@ namespace BrowseClimate.Controllers
         public ArticleController(IConfiguration configuration)
         {
             _articleService = new ArticleService();
+            _commentService = new CommentService();
 
             _configuration = configuration;
             _userService = new UserService(_configuration);
@@ -47,13 +51,12 @@ namespace BrowseClimate.Controllers
       
             User user = await _userService.GetUser(3);
 
+
             try
             {
+                article.CreatedBy= user.Id;
+               
 
-                article.Title = "Title";
-                article.Content = "Content 222";
-                article.Description = "desc";
-                article.CreatedBy = user.Id;
                 await _articleService.CreateArticle(article);
                 
                 return Ok(article);
@@ -71,7 +74,14 @@ namespace BrowseClimate.Controllers
             try
             {
                 Article article = await _articleService.GetArticle(id);
-                return Ok(article);
+                if (article != null)
+                {
+                    List<Comment> comments = await _commentService.GetAllCommentsForArticle(article.Id);
+                    article.Comments = comments;
+                    return Ok(article);
+                }
+                else return BadRequest("Article not found");
+            
             }catch(Exception ex)
             {
                 throw new Exception(ex.Message);
@@ -125,6 +135,14 @@ namespace BrowseClimate.Controllers
             try
             {
                 List<Article> articles = await _articleService.GetAllArticles();
+                foreach (Article article in articles)
+                {
+                     List<Comment> comments =  await _commentService.GetAllCommentsForArticle(article.Id);
+                     article.Comments = comments;
+
+                }
+
+
                 return Ok(articles);
             }
             catch (Exception ex)
@@ -133,6 +151,57 @@ namespace BrowseClimate.Controllers
             }
         }
 
+        [HttpPut]
+        [Route("Comment/Update")]
+        public async Task<IActionResult>  UpdateComment(Comment comment)
+        {
+            try
+            {
+                await _commentService.UpdateComment(comment);
+                return Ok("Comment updated with success");
+            }catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+      
+        }
+
+        [HttpDelete]
+        [Route("Comment/Delete")]
+        public async Task<IActionResult> DeleteComment(int id)
+        {
+            try
+            {
+                await _commentService.DeleteComment(id);
+                return Ok("Comment deleted with success");
+            }catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("Comment/Create")]
+        public async Task<IActionResult> CreateComment(Comment comment, int articleId)
+        {
+            try
+            {
+                await _commentService.CreateComment(comment, articleId);
+                return Ok("Comment created with success!");
+                
+                
+            }
+            catch (Exception ex)
+            {
+
+
+                throw new Exception(ex.Message);
+            }
+        }
+
+
+
+  
 
     }
 }

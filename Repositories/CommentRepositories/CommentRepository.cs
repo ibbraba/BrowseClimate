@@ -11,8 +11,8 @@ namespace BrowseClimate.Repositories.CommentRepositories
 
         public async Task CreateComment(Comment comment)
         {
-            int userId = comment.CreatedBy.Id;
-            int articleId = comment.Article.Id;
+            int userId = comment.CreatedBy;
+            int articleId = comment.ArticleId;
             DateTime createdAt = comment.CreatedAt; 
             string content = comment.Content;
             

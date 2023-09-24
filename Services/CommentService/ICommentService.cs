@@ -4,7 +4,7 @@ namespace BrowseClimate.Services.CommentService
 {
     public interface ICommentService
     {
-         Task CreateComment( Comment comment);
+         Task CreateComment( Comment comment, int articlceId);
 
         Task<Comment> GetComment(int id);
 
@@ -14,7 +14,7 @@ namespace BrowseClimate.Services.CommentService
 
         void ValidateComment(Comment comment);
 
-        Task<List<Comment>> GetAllCommentsForArticle(Article article);
+        Task<List<Comment>> GetAllCommentsForArticle(int id);
 
     }
 }

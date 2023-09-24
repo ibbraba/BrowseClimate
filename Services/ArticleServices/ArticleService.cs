@@ -1,5 +1,6 @@
 ﻿using BrowseClimate.Models;
 using BrowseClimate.Repositories.ArticleRepositories;
+using BrowseClimate.Repositories.CommentRepositories;
 using Microsoft.Identity.Client;
 
 namespace BrowseClimate.Services.ArticleServices
@@ -7,10 +8,12 @@ namespace BrowseClimate.Services.ArticleServices
     public class ArticleService : IArticleService
     {
         private IArticleRepository _articleRepository;
+        private CommentRepository _commentaireRepository;
 
         public ArticleService() {
 
-             _articleRepository = new ArticleRepository();   
+             _articleRepository = new ArticleRepository();
+            _commentaireRepository = new CommentRepository();
 
         }
 
@@ -59,6 +62,11 @@ namespace BrowseClimate.Services.ArticleServices
         {
             Article article = await _articleRepository.GetArticle(id);
             return article;
+        }
+
+        public Task<List<Comment>> GetArticleComments(int articleId)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task RateArticle(User user, int note)

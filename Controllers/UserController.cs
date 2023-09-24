@@ -34,12 +34,80 @@ namespace BrowseClimate.Controllers
             try {
 
                 _userService.CreateUser(user);
-                return Ok(user);
+                return Ok("User succesfully created " +user);
             } catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
 
+        }
+
+
+        [HttpGet]
+        [Route("Get")]
+        public async Task<IActionResult> Get(int id)
+        {
+            try
+            {
+                User user = await _userService.GetUser(id);
+                return Ok(user);
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+
+
+        [HttpPut]
+        [Route("Update")]
+        public async Task<IActionResult> Update(User user)
+        {
+            try
+            {
+                await _userService.UpdateUser(user);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+
+        }
+
+        [HttpGet]
+        [Route("GetPseudo")]
+        public async Task<IActionResult> FindUserWithPseudo(string pseudo)
+        {
+            try {
+
+                User user = await _userService.FindUserWithPseudo(pseudo);
+                return Ok(user); 
+
+
+            }catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+
+            }
+
+        }
+
+
+        [HttpDelete]
+        [Route("Delete")]
+        public async Task <IActionResult> Delete(User user)
+        {
+            try
+            {
+                await _userService.DeleteUser(user);
+                return Ok(user); 
+            }catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
 
@@ -75,6 +143,9 @@ namespace BrowseClimate.Controllers
             _userService.TestError();
             return BadRequest("check");
         }
+
+
+
         
 
     }

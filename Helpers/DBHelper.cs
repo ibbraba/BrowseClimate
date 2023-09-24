@@ -32,9 +32,6 @@ namespace BrowseClimate.Helpers
           
 //            string _connectionString = _configuration.GetValue<string>("KeyVaultURL");
             IDbConnection connection = new SqlConnection(cs);
-        
-            
-       
             return connection;
 
         }

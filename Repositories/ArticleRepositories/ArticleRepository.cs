@@ -15,13 +15,14 @@ namespace BrowseClimate.Repositories.ArticleRepositories
             string description = article.Description;
             string content = article.Content;
 
+
             using (IDbConnection db = DBHelper.connectToDB())
             {
 
 
+
                 var output = await db.ExecuteAsync("dbo.SpArticle_CreateArticle", new { createdBy, title, description, content }, commandType: CommandType.StoredProcedure);
-
-
+                    
             }
         }
 
@@ -70,5 +71,8 @@ namespace BrowseClimate.Repositories.ArticleRepositories
                 var output = await db.ExecuteAsync("dbo.SpArticle_EditArticle", new { id, title, description, content }, commandType: CommandType.StoredProcedure);
             }
         }
+
+
+
     }
 }

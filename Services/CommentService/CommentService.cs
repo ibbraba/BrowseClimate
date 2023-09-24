@@ -17,9 +17,11 @@ namespace BrowseClimate.Services.CommentService
             _commentRepository = commentRepository;
         }
 
-        public async Task CreateComment(Comment comment)
+        public async Task CreateComment(Comment comment, int articlceId)
         {
-            ValidateComment(comment); 
+            ValidateComment(comment);
+            comment.ArticleId = articlceId;
+
             //SET USER 
             //SET Article 
             comment.CreatedAt = DateTime.Now;
@@ -31,9 +33,9 @@ namespace BrowseClimate.Services.CommentService
            await _commentRepository.DeleteComment(id);
         }
 
-        public async Task<List<Comment>> GetAllCommentsForArticle(Article article)
+        public async Task<List<Comment>> GetAllCommentsForArticle(int articleid)
         {
-            List<Comment> comments = await _commentRepository.GetAllCommentsForArticle(article.Id);
+            List<Comment> comments = await _commentRepository.GetAllCommentsForArticle(articleid);
             return comments;
 
         }

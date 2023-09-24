@@ -18,6 +18,8 @@ namespace BrowseClimate.Services.ArticleServices
         void ValidateArticle(Article article);
 
 
+        Task<List<Comment>> GetArticleComments(int articleId);
+
 
     }
 }
