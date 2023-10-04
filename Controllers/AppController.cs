@@ -6,7 +6,7 @@ using System.Web.Http.Cors;
 
 namespace BrowseClimate.Controllers
 {
-    [Authorize]
+  
     [Route("api/[controller]")]
     [ApiController]
    // [EnableCors(origins: "http://localhost:5173/", headers: "*", methods: "*")]
@@ -23,6 +23,7 @@ namespace BrowseClimate.Controllers
 
         [HttpGet]
         [Route ("Index")]
+        [Authorize]
         public IActionResult Index()
         {
          //Main main = new();

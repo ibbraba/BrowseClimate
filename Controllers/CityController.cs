@@ -1,8 +1,8 @@
 ﻿using BrowseClimate.Models;
 using BrowseClimate.Services.CityServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using System.Reflection.Metadata.Ecma335;
 
 namespace BrowseClimate.Controllers
 {
@@ -55,6 +55,7 @@ namespace BrowseClimate.Controllers
 
         [HttpPost]
         [Route("Create")]
+        [Authorize]
         public async Task<IActionResult> Create (City city){
 
             try
@@ -71,6 +72,7 @@ namespace BrowseClimate.Controllers
 
         [HttpPost]
         [Route("Update")]
+        [Authorize]
         public async Task<IActionResult> Update(City city)
         {
             try
@@ -89,6 +91,7 @@ namespace BrowseClimate.Controllers
 
         [HttpPost]
         [Route("Delete")]
+        [Authorize]
         public async Task<IActionResult> Delete(City city)
         {
             try
@@ -103,5 +106,8 @@ namespace BrowseClimate.Controllers
 
 
         }
+
+
+
     }
 }

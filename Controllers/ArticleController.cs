@@ -3,7 +3,7 @@ using BrowseClimate.Models;
 using BrowseClimate.Services.ArticleServices;
 using BrowseClimate.Services.CommentService;
 using BrowseClimate.Services.UserServices;
-
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Runtime.InteropServices;
 
@@ -46,6 +46,7 @@ namespace BrowseClimate.Controllers
         
         [HttpPost]
         [Route("Create")]
+        [Authorize]
         public async Task<IActionResult> Create(Article article)
         {
       
@@ -91,6 +92,7 @@ namespace BrowseClimate.Controllers
 
         [HttpPost]
         [Route("Update")]
+        [Authorize]
         public async Task<IActionResult> Update (Article article)
         {
 
@@ -112,7 +114,7 @@ namespace BrowseClimate.Controllers
 
         [HttpPost]
         [Route("Delete")]
-
+        [Authorize]
         public async Task<IActionResult> Delete(Article article)
         {
             try
@@ -153,6 +155,7 @@ namespace BrowseClimate.Controllers
 
         [HttpPut]
         [Route("Comment/Update")]
+        [Authorize]
         public async Task<IActionResult>  UpdateComment(Comment comment)
         {
             try
@@ -168,6 +171,7 @@ namespace BrowseClimate.Controllers
 
         [HttpDelete]
         [Route("Comment/Delete")]
+        [Authorize]
         public async Task<IActionResult> DeleteComment(int id)
         {
             try
@@ -182,6 +186,7 @@ namespace BrowseClimate.Controllers
 
         [HttpGet]
         [Route("Comment/Create")]
+        [Authorize]
         public async Task<IActionResult> CreateComment(Comment comment, int articleId)
         {
             try
@@ -193,8 +198,6 @@ namespace BrowseClimate.Controllers
             }
             catch (Exception ex)
             {
-
-
                 throw new Exception(ex.Message);
             }
         }

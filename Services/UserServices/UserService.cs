@@ -49,9 +49,7 @@ namespace BrowseClimate.Services.UserServices
         }
 
 
-     
-
-
+ 
         public void ValidatePassword(User user)
         {
             throw new NotImplementedException();
@@ -132,5 +130,11 @@ namespace BrowseClimate.Services.UserServices
             return jwt;
 
         }
+        
+
+
+
+
+
     }
 }

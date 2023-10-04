@@ -1,5 +1,6 @@
 ﻿using BrowseClimate.Models;
 using BrowseClimate.Services.UserServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic;
@@ -19,8 +20,12 @@ namespace BrowseClimate.Controllers
         }
 
 
+        
+
+
         [HttpGet]
         [Route("MyPage")]
+        [Authorize]
         public string MyPage(int id)
         {
             return "Profile page";
@@ -29,6 +34,7 @@ namespace BrowseClimate.Controllers
 
         [HttpPost]
         [Route("Create")]
+        [Authorize]
         public async Task<IActionResult> CreateUser(User user)
         {
             try {
@@ -45,6 +51,7 @@ namespace BrowseClimate.Controllers
 
         [HttpGet]
         [Route("Get")]
+        [Authorize]
         public async Task<IActionResult> Get(int id)
         {
             try
@@ -62,6 +69,7 @@ namespace BrowseClimate.Controllers
 
         [HttpPut]
         [Route("Update")]
+        [Authorize]
         public async Task<IActionResult> Update(User user)
         {
             try
@@ -98,6 +106,7 @@ namespace BrowseClimate.Controllers
 
         [HttpDelete]
         [Route("Delete")]
+        [Authorize]
         public async Task <IActionResult> Delete(User user)
         {
             try
@@ -135,16 +144,7 @@ namespace BrowseClimate.Controllers
 
         }
 
-        [HttpGet]
-        [Route("testerror")]
-        public async Task<IActionResult> TestError()
-        {
-
-            _userService.TestError();
-            return BadRequest("check");
-        }
-
-
+   
 
         
 
