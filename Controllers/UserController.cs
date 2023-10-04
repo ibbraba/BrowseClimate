@@ -144,6 +144,17 @@ namespace BrowseClimate.Controllers
 
         }
 
+
+        [HttpGet]
+        [Route("validate")]
+        [Authorize]
+        public async Task<IActionResult> VaidateToken()
+        {
+
+
+            return Ok(true);
+
+        }
    
 
         

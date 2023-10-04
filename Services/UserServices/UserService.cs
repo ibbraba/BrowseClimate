@@ -108,8 +108,9 @@ namespace BrowseClimate.Services.UserServices
         {
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, user.Pseudo.Trim()), 
-                new Claim(ClaimTypes.Role, user.Role.Trim())
+                new Claim("UserId", user.Id);
+                new Claim("pseudo", user.Pseudo.Trim()), 
+                new Claim("role", user.Role.Trim())
             };
 
             var configToken = "Whatever you want as long as it is goood";
