@@ -69,6 +69,12 @@ namespace BrowseClimate.Services.ArticleServices
             throw new NotImplementedException();
         }
 
+        public async Task<List<Article>> GetUserArticles(int id)
+        {
+            List<Article> articles = await _articleRepository.GetUserArticles(id);
+            return articles;
+        }
+
         public async Task RateArticle(User user, int note)
         {
             throw new NotImplementedException();

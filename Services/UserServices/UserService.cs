@@ -108,7 +108,7 @@ namespace BrowseClimate.Services.UserServices
         {
             List<Claim> claims = new List<Claim>
             {
-                new Claim("UserId", user.Id);
+                new Claim("UserId", user.Id.ToString()),
                 new Claim("pseudo", user.Pseudo.Trim()), 
                 new Claim("role", user.Role.Trim())
             };
@@ -123,7 +123,7 @@ namespace BrowseClimate.Services.UserServices
 
             var token = new JwtSecurityToken(
                 claims: claims,
-                expires: DateTime.Now.AddHours(5), 
+                expires: DateTime.Now.AddHours(4), 
                 signingCredentials: cred
                 ); ;
 

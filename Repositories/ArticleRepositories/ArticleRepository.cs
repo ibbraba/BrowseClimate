@@ -5,7 +5,7 @@ using System.Data;
 
 namespace BrowseClimate.Repositories.ArticleRepositories
 {
-    public class ArticleRepository : IArticleRepository
+    public class ArticleRepository : IArticleRepository 
     {
     
         public async Task CreateArticle(Article article)
@@ -57,6 +57,17 @@ namespace BrowseClimate.Repositories.ArticleRepositories
 
         }
 
+        public async Task<List<Article>> GetUserArticles(int id)
+        {
+            using (IDbConnection db = DBHelper.connectToDB())
+            {
+
+                var output = await db.QueryAsync<Article>("dbo.SpArticle_GetUserArticles", new { id }, commandType: CommandType.StoredProcedure);
+
+                return output.ToList();
+            }
+        }
+
         public async Task UpdateArticle(Article article)
         {
 
@@ -72,6 +83,8 @@ namespace BrowseClimate.Repositories.ArticleRepositories
             }
         }
 
+
+        
 
 
     }

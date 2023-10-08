@@ -12,8 +12,9 @@ namespace BrowseClimate.Repositories.ArticleRepositories
         
         Task UpdateArticle (Article article);   
 
-        Task DeleteArticle(int id); 
+        Task DeleteArticle(int id);
 
+        Task<List<Article>> GetUserArticles(int id);
 
 
     }

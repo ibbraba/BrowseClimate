@@ -20,6 +20,7 @@ namespace BrowseClimate.Services.ArticleServices
 
         Task<List<Comment>> GetArticleComments(int articleId);
 
+        Task<List<Article>> GetUserArticles(int id);
 
     }
 }

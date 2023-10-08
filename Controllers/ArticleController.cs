@@ -153,6 +153,24 @@ namespace BrowseClimate.Controllers
             }
         }
 
+
+        [HttpGet]
+        [Route("GetUserArticle")]
+        public async Task<IActionResult> GetUsersArticles(int id)
+        {
+            try
+            {
+                List<Article> articles = await _articleService.GetUserArticles(id);
+                return Ok(articles);
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+
+        }
+
         [HttpPut]
         [Route("Comment/Update")]
         [Authorize]
