@@ -9,7 +9,7 @@ namespace BrowseClimate.Services.UserServices
 
         Task UpdateUser(User user);
 
-        Task DeleteUser(User user);
+        Task DeleteUser(int id);
 
         void ValidateUser(User user);
 
@@ -22,6 +22,8 @@ namespace BrowseClimate.Services.UserServices
         Task<string> LoginUser(string login, string password);
 
         string CreateToken(User user);
+
+        Task<List<User>> GetAll();
 
 
     }

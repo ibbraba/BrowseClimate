@@ -107,12 +107,12 @@ namespace BrowseClimate.Controllers
         [HttpDelete]
         [Route("Delete")]
         [Authorize]
-        public async Task <IActionResult> Delete(User user)
+        public async Task <IActionResult> Delete(int id)
         {
             try
             {
-                await _userService.DeleteUser(user);
-                return Ok(user); 
+                await _userService.DeleteUser(id);
+                return Ok("User with Id " + id + " deleted."); 
             }catch (Exception ex)
             {
                 return BadRequest(ex.Message);
@@ -155,8 +155,25 @@ namespace BrowseClimate.Controllers
             return Ok(true);
 
         }
-   
 
+
+        [HttpGet]
+        [Route("GetAll")]
+        [Authorize]
+        public async Task<IActionResult> GetAll()
+        {
+            try
+            {
+                List<User> users = await _userService.GetAll();
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+          
+        }
         
 
     }

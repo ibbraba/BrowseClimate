@@ -9,7 +9,7 @@ namespace BrowseClimate.Services.ArticleServices
         Task<Article> GetArticle(int id);
 
         Task UpdateArticle(Article article);
-        Task DeleteArticle(Article article);
+        Task DeleteArticle(int id);
 
         Task RateArticle(User user, int note);
 
@@ -21,6 +21,13 @@ namespace BrowseClimate.Services.ArticleServices
         Task<List<Comment>> GetArticleComments(int articleId);
 
         Task<List<Article>> GetUserArticles(int id);
+
+        Task<List<Article>> GetDiscoverArticles(int userId);
+
+        Task <List<Article>> GetTopArticles();
+
+        Task <List<User>> GetLikesOnArticle(int articleId);
+
 
     }
 }

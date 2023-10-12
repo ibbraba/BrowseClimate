@@ -13,5 +13,7 @@ namespace BrowseClimate.Repositories.UserRepositories
 
         Task<User> FindOneWithPseudo(string pseudo);
 
+        Task<List<User>> GetAll();
+
     }
 }

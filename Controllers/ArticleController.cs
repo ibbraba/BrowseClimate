@@ -46,7 +46,7 @@ namespace BrowseClimate.Controllers
         
         [HttpPost]
         [Route("Create")]
-        [Authorize]
+
         public async Task<IActionResult> Create(Article article)
         {
       
@@ -115,12 +115,12 @@ namespace BrowseClimate.Controllers
         [HttpPost]
         [Route("Delete")]
         [Authorize]
-        public async Task<IActionResult> Delete(Article article)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {
-                await _articleService.DeleteArticle(article);
-                return Ok("Article avec l'Id " + article.Id + " supprimé!");
+                await _articleService.DeleteArticle(id);
+                return Ok("Article avec l'Id " + id + " supprimé!");
             }catch(Exception ex)
             {
                 throw new Exception(ex.Message);
@@ -143,7 +143,6 @@ namespace BrowseClimate.Controllers
                      article.Comments = comments;
 
                 }
-
 
                 return Ok(articles);
             }
@@ -218,6 +217,30 @@ namespace BrowseClimate.Controllers
             {
                 throw new Exception(ex.Message);
             }
+
+
+        }
+
+
+        [HttpGet]
+        [Route("GetDiscoverArticles")]
+   
+        public async Task<IActionResult> GetDiscoverArticles(int userId)
+        {
+            try
+            {
+                List<Article> articles = await _articleService.GetDiscoverArticles(userId); 
+                return Ok(articles);
+
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+
+
+
         }
 
 

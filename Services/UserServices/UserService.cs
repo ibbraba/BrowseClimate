@@ -1,6 +1,7 @@
 ﻿using BrowseClimate.Models;
 using BrowseClimate.Repositories.UserRepositories;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -37,9 +38,9 @@ namespace BrowseClimate.Services.UserServices
             await _userRepository.CreateUser(user);
         }
 
-        public async Task DeleteUser(User user)
+        public async Task DeleteUser(int id)
         {
-            await _userRepository.DeleteUser(user.Id);
+            await _userRepository.DeleteUser(id);
         }
 
         public async Task UpdateUser(User user)
@@ -131,11 +132,11 @@ namespace BrowseClimate.Services.UserServices
             return jwt;
 
         }
-        
 
-
-
-
-
+        public async Task<List<User>> GetAll()
+        {
+            List<User> users = await _userRepository.GetAll();
+            return users;
+        }
     }
 }

@@ -40,11 +40,11 @@ namespace BrowseClimate.Services.ArticleServices
             
         }
 
-        public async Task DeleteArticle(Article article)
+
+
+        public async Task DeleteArticle(int id)
         {
-
-
-            await _articleRepository.DeleteArticle(article.Id); 
+            await _articleRepository.DeleteArticle(id);
         }
 
         public async Task<List<Article>> GetAllArticles()
@@ -67,6 +67,55 @@ namespace BrowseClimate.Services.ArticleServices
         public Task<List<Comment>> GetArticleComments(int articleId)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<List<Article>> GetDiscoverArticles(int userId)
+        {
+            
+            //User Articles
+            List<Article> Userarticle = await _articleRepository.GetUserArticles(userId);
+            List<Article> topArticles = await _articleRepository.GetTopArticles();
+            List<Article> likedArticles = await _articleRepository.GetArticlesLikedByUser(userId);
+
+
+            //Articles Liked by user
+
+            List<Article> discoverArticles = new();
+            discoverArticles.AddRange(Userarticle);
+
+            foreach(Article article in topArticles)
+            {
+                 Article topArticle = discoverArticles.Find(x => x.Id == article.Id);
+
+                if (topArticle == null)
+                {
+                    discoverArticles.Add(article);
+                }
+
+            }
+
+            foreach (Article article in likedArticles)
+            {
+                Article likedArticle = discoverArticles.Find(x => x.Id == article.Id);
+
+                if (likedArticle == null)
+                {
+                    discoverArticles.Add(article);
+                }
+
+            }
+     
+
+            discoverArticles = discoverArticles.Distinct().ToList();
+            discoverArticles = discoverArticles.OrderBy(x => x.CreatedAt).ToList();
+            discoverArticles = discoverArticles.AsEnumerable().Reverse().ToList();
+
+
+
+            return discoverArticles;    
+
+            //Top Articles
+            //
         }
 
         public async Task<List<Article>> GetUserArticles(int id)
@@ -96,6 +145,24 @@ namespace BrowseClimate.Services.ArticleServices
             }
 
         }
+
+
+        async Task<List<Article>> IArticleService.GetTopArticles()
+        {
+            List<Article> articles = await _articleRepository.GetTopArticles();
+            return articles;
+        }
+
+   
+
+        public async Task<List<User>> GetLikesOnArticle(int articleId)
+        {
+            List<User> articles = await _articleRepository.GetLikesOnArticle(articleId);
+            return articles;
+
+        }
+
+   
 
 
         //ADD LIKE 

@@ -52,6 +52,17 @@ namespace BrowseClimate.Repositories.UserRepositories
             }
         }
 
+        public async Task<List<User>> GetAll()
+        {
+
+            using (IDbConnection db = DBHelper.connectToDB())
+            {
+                var output = await db.QueryAsync<User>("dbo.SpUser_GetAll",  commandType: CommandType.StoredProcedure);
+                return output.ToList();
+            }
+
+        }
+
         public async Task<User> GetUser(int id)
         {
             using (IDbConnection db = DBHelper.connectToDB())

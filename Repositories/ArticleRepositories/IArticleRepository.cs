@@ -17,5 +17,13 @@ namespace BrowseClimate.Repositories.ArticleRepositories
         Task<List<Article>> GetUserArticles(int id);
 
 
+        Task<List<Article>> GetTopArticles();
+
+        Task<List<User>> GetLikesOnArticle(int articleId);
+
+        Task<List<Article>> GetArticlesLikedByUser(int userId);
+
+
+
     }
 }
