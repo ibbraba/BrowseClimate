@@ -1,4 +1,5 @@
-﻿using BrowseClimate.Models;
+﻿using BrowseClimate.Helpers;
+using BrowseClimate.Models;
 using BrowseClimate.Repositories.CityRepositories;
 
 namespace BrowseClimate.Services.CityServices
@@ -20,11 +21,17 @@ namespace BrowseClimate.Services.CityServices
         }
 
 
-
+        public async Task<string> GetLocalTime(City city)
+        {
+            TimeZoneAPIHelper timeZoneAPIHelper = new TimeZoneAPIHelper();
+            string localTime = await timeZoneAPIHelper.RequestLocalTimeZone(city);
+            return localTime;
+        }
         public async Task CreateCity(City city)
         {
 
             ValidateCity(city);
+            city.CreatedAt = DateTime.Now;
             await _cityRepository.CreateCity(city);
         }
 
@@ -36,13 +43,26 @@ namespace BrowseClimate.Services.CityServices
         public async Task<List<City>> GetAllCities()
         {
             List<City> cities = await _cityRepository.GetAllCities();
+            foreach(City city in cities)
+            {
+                city.TimeZone = await GetLocalTime(city);
+            }
+
+            //TODO Add Timezone
+
+            cities = cities.OrderBy(x => x.CreatedAt).ToList();
+            cities = cities.AsEnumerable().Reverse().ToList();
             return cities;
 
         }
 
         public async Task<City> GetCity(int id)
         {
+         
+   
             City city = await _cityRepository.GetCity(id);
+            city.TimeZone = await GetLocalTime(city);
+
             return city;
         }
 
@@ -59,5 +79,7 @@ namespace BrowseClimate.Services.CityServices
                 throw new ArgumentException("Veuillez indiquer le pays, la ville et sa description"); 
             }
         }
+
+        
     }
 }

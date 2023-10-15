@@ -26,6 +26,7 @@ namespace BrowseClimate.Controllers
             try
             {
                 City city = await _cityService.GetCity(id);
+                
                 return Ok(city);
 
 
@@ -55,7 +56,7 @@ namespace BrowseClimate.Controllers
 
         [HttpPost]
         [Route("Create")]
-        [Authorize]
+        
         public async Task<IActionResult> Create (City city){
 
             try

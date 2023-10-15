@@ -11,6 +11,8 @@
         public int NumberResidents { get; set; }
         public DateTime CreatedAt { get; set; }
 
+        public string TimeZone { get; set; }
+
 
 
     }

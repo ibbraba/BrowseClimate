@@ -21,6 +21,7 @@ namespace BrowseClimate.Repositories.CityRepositories
             string name = city.Name; 
             string country = city.Country;
             int numberResidents = city.NumberResidents;
+            DateTime createdAt = city.CreatedAt;
 
 
             using (System.Data.IDbConnection db = DBHelper.connectToDB())
@@ -29,7 +30,8 @@ namespace BrowseClimate.Repositories.CityRepositories
                 {
                     name,
                     country,
-                    numberResidents
+                    numberResidents, 
+                    createdAt
                 }, commandType: System.Data.CommandType.StoredProcedure);
             }
         }
