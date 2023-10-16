@@ -11,6 +11,7 @@ namespace BrowseClimate.Services.CityServices
         public CityService() {
 
             _cityRepository = new CityRepository();
+            
         
         }    
 
@@ -27,6 +28,16 @@ namespace BrowseClimate.Services.CityServices
             string localTime = await timeZoneAPIHelper.RequestLocalTimeZone(city);
             return localTime;
         }
+
+
+        public async Task<double> GetWheather(City city)
+        {
+         
+            double wheather = await OpenWheatherAPIHelper.GetWheather(city);
+            return wheather;
+        }
+
+
         public async Task CreateCity(City city)
         {
 
@@ -61,8 +72,13 @@ namespace BrowseClimate.Services.CityServices
          
    
             City city = await _cityRepository.GetCity(id);
-            city.TimeZone = await GetLocalTime(city);
 
+            city.TimeZone = await GetLocalTime(city);
+            
+            
+            double wheather = await GetWheather(city);
+
+            city.Temperature = Convert.ToInt32(wheather);
             return city;
         }
 

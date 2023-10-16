@@ -59,15 +59,18 @@ var client = new SecretClient(new Uri(keyVaultUrl), credential);
 
 
 var secret = await client.GetSecretAsync("bclocaldb");
+var OpenWheatherAPIKEY = await client.GetSecretAsync("bcOpenWWheatherAPIKey");
 
 
 
 string cnn = secret.Value.Value;
 
+
+
 Debug.WriteLine(cnn);
 
 DBHelper._cnn = cnn;
-
+OpenWheatherAPIHelper.API_KEY = OpenWheatherAPIKEY.Value.Value;
 
 
 

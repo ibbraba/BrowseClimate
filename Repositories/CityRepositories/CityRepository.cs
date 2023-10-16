@@ -16,8 +16,6 @@ namespace BrowseClimate.Repositories.CityRepositories
         {
             
 
-            
-
             string name = city.Name; 
             string country = city.Country;
             int numberResidents = city.NumberResidents;
