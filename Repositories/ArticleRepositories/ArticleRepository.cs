@@ -8,7 +8,7 @@ namespace BrowseClimate.Repositories.ArticleRepositories
     public class ArticleRepository : IArticleRepository 
     {
     
-        public async Task CreateArticle(Article article)
+        public async Task<int> CreateArticle(Article article)
         {
             int createdBy = article.CreatedBy;
             string title = article.Title;
@@ -23,8 +23,9 @@ namespace BrowseClimate.Repositories.ArticleRepositories
 
 
 
-                var output = await db.ExecuteAsync("dbo.SpArticle_CreateArticle", new { createdBy, title, description, content, createdAt, updatedAt }, commandType: CommandType.StoredProcedure); ;
-                    
+                var articleId = await db.QuerySingleOrDefaultAsync<int>("dbo.SpArticle_CreateArticle", new { createdBy, title, description, content, createdAt, updatedAt }, commandType: CommandType.StoredProcedure); ;
+                return articleId;
+
             }
         }
 

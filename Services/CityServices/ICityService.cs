@@ -8,7 +8,7 @@ namespace BrowseClimate.Services.CityServices
         Task<City> GetCity(int id);
 
         Task UpdateCity(City city);
-        Task DeleteCity(City city);
+        Task DeleteCity(int id);
         void ValidateCity(City city);
 
         Task<List<City>> GetAllCities();

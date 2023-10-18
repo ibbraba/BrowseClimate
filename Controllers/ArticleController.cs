@@ -58,8 +58,8 @@ namespace BrowseClimate.Controllers
                 article.CreatedBy= user.Id;
                
 
-                await _articleService.CreateArticle(article);
-                
+                int articleID = await _articleService.CreateArticle(article);
+                article.Id = articleID;
                 return Ok(article);
 
             }catch (Exception ex)

@@ -19,7 +19,7 @@
 
         public int Temperature { get; set; }
 
-        
+        public string ImageURL { get; set; }
 
 
 

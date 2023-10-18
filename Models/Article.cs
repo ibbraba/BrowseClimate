@@ -8,7 +8,7 @@
         public string Content { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
-        
+
         public int CreatedBy { get; set; }
 
         public bool isAdminArticle { get; set; }
@@ -18,5 +18,7 @@
         public int Views { get; set; }
 
         public List<Comment> Comments = new List<Comment>();
+
+        public string ImageURL { get; set; }
     }
 }

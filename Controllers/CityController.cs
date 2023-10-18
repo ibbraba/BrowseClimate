@@ -93,12 +93,12 @@ namespace BrowseClimate.Controllers
         [HttpPost]
         [Route("Delete")]
         [Authorize]
-        public async Task<IActionResult> Delete(City city)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {
-                await _cityService.DeleteCity(city);
-                return Ok(city.Name + " deleted with success !");
+                await _cityService.DeleteCity(id);
+                return Ok("Deleted with success !");
             }
             catch (Exception ex)
             {

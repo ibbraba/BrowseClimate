@@ -46,9 +46,9 @@ namespace BrowseClimate.Services.CityServices
             await _cityRepository.CreateCity(city);
         }
 
-        public async Task DeleteCity(City city)
+        public async Task DeleteCity(int id)
         {
-            await _cityRepository.DeleteCity(city.Id);
+            await _cityRepository.DeleteCity(id);
         }
 
         public async Task<List<City>> GetAllCities()
@@ -70,15 +70,24 @@ namespace BrowseClimate.Services.CityServices
         public async Task<City> GetCity(int id)
         {
          
-   
+            
             City city = await _cityRepository.GetCity(id);
 
             city.TimeZone = await GetLocalTime(city);
+            try
+            {
+                double wheather = await GetWheather(city);
             
-            
-            double wheather = await GetWheather(city);
+                city.Temperature = Convert.ToInt32(wheather);
 
-            city.Temperature = Convert.ToInt32(wheather);
+                
+            }
+            catch
+            {
+
+            }
+
+            
             return city;
         }
 

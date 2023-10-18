@@ -24,17 +24,19 @@ namespace BrowseClimate.Services.ArticleServices
         }
 
 
-        public async Task CreateArticle(Article article)
+        public async Task<int> CreateArticle(Article article)
         {
 
             ValidateArticle(article);
             article.CreatedAt = DateTime.Now;
+            article.UpdatedAt = DateTime.Now;
             //TODO: Article CreatedBy & isAdminArticle
             article.Likes = 0; 
             article.Views = 0;
            
 
-            await _articleRepository.CreateArticle(article);
+            int articleId = await _articleRepository.CreateArticle(article);
+            return articleId;
 
 
             

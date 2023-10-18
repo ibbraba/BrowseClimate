@@ -4,7 +4,7 @@ namespace BrowseClimate.Repositories.ArticleRepositories
 {
     public interface IArticleRepository
     {
-        Task CreateArticle(Article article);
+        Task<int> CreateArticle(Article article);
 
         Task<Article> GetArticle(int id);
 

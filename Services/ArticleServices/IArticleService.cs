@@ -4,7 +4,7 @@ namespace BrowseClimate.Services.ArticleServices
 {
     public interface IArticleService 
     {
-        Task CreateArticle(Article article);
+        Task<int> CreateArticle(Article article);
 
         Task<Article> GetArticle(int id);
 
