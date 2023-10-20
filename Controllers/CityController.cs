@@ -1,5 +1,6 @@
 ﻿using BrowseClimate.Models;
 using BrowseClimate.Services.CityServices;
+using BrowseClimate.Services.FactServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -11,11 +12,12 @@ namespace BrowseClimate.Controllers
     public class CityController : ControllerBase
     {
         private CityService _cityService;
-    
+        private FactService _factService;
+
         public CityController ()
         {
             _cityService = new CityService();
-           
+            _factService = new FactService(); 
 
         }
 
@@ -26,6 +28,7 @@ namespace BrowseClimate.Controllers
             try
             {
                 City city = await _cityService.GetCity(id);
+                city.Facts = await _factService.GetCityFacts(id);
                 
                 return Ok(city);
 
@@ -107,6 +110,7 @@ namespace BrowseClimate.Controllers
 
 
         }
+
 
 
 

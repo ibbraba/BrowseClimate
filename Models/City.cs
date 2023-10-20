@@ -21,6 +21,8 @@
 
         public string ImageURL { get; set; }
 
+        public List<Fact> Facts { get; set; }  
+
 
 
     }

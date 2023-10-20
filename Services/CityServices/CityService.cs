@@ -1,17 +1,20 @@
 ﻿using BrowseClimate.Helpers;
 using BrowseClimate.Models;
 using BrowseClimate.Repositories.CityRepositories;
+using BrowseClimate.Services.FactServices;
 
 namespace BrowseClimate.Services.CityServices
 {
     public class CityService : ICityService
     {
         private ICityRepository _cityRepository;
+        private FactService _factService;
 
         public CityService() {
 
             _cityRepository = new CityRepository();
-            
+
+            _factService = new FactService();    
         
         }    
 
@@ -28,6 +31,9 @@ namespace BrowseClimate.Services.CityServices
             string localTime = await timeZoneAPIHelper.RequestLocalTimeZone(city);
             return localTime;
         }
+
+
+
 
 
         public async Task<double> GetWheather(City city)
@@ -57,6 +63,7 @@ namespace BrowseClimate.Services.CityServices
             foreach(City city in cities)
             {
                 city.TimeZone = await GetLocalTime(city);
+                city.Facts = await _factService.GetCityFacts(city.Id);
             }
 
             //TODO Add Timezone

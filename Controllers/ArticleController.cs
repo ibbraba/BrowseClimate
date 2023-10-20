@@ -50,13 +50,9 @@ namespace BrowseClimate.Controllers
         public async Task<IActionResult> Create(Article article)
         {
       
-            User user = await _userService.GetUser(3);
-
-
             try
             {
-                article.CreatedBy= user.Id;
-               
+          
 
                 int articleID = await _articleService.CreateArticle(article);
                 article.Id = articleID;
@@ -242,6 +238,7 @@ namespace BrowseClimate.Controllers
 
 
         }
+
 
 
 
