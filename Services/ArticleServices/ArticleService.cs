@@ -30,6 +30,7 @@ namespace BrowseClimate.Services.ArticleServices
             ValidateArticle(article);
             article.CreatedAt = DateTime.Now;
             article.UpdatedAt = DateTime.Now;
+
             //TODO: Article CreatedBy & isAdminArticle
             article.Likes = 0; 
             article.Views = 0;
@@ -63,6 +64,7 @@ namespace BrowseClimate.Services.ArticleServices
         public async Task<Article> GetArticle(int id)
         {
             Article article = await _articleRepository.GetArticle(id);
+            article.Timestamp = (int)article.CreatedAt.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
             return article;
         }
 
@@ -123,6 +125,7 @@ namespace BrowseClimate.Services.ArticleServices
         public async Task<List<Article>> GetUserArticles(int id)
         {
             List<Article> articles = await _articleRepository.GetUserArticles(id);
+            
             return articles;
         }
 

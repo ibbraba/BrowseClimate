@@ -58,6 +58,11 @@ namespace BrowseClimate.Controllers
             try
             {
                 List<Fact> facts = await _factService.GetAll();
+                foreach(Fact fact in facts)
+                {
+
+                    fact.Timestamp = (int)fact.CreatedAt.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
+                }
                 return Ok(facts);
 
             }

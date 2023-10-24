@@ -23,7 +23,7 @@
 
         public List<Fact> Facts { get; set; }  
 
-
+        public int Timestamp { get; set; } 
 
     }
 }

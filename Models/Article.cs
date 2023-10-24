@@ -20,5 +20,7 @@
         public List<Comment> Comments = new List<Comment>();
 
         public string ImageURL { get; set; }
+
+        public int Timestamp { get; set; }
     }
 }

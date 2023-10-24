@@ -48,6 +48,10 @@ namespace BrowseClimate.Controllers
             try
             {
                 List<City> cities = await _cityService.GetAllCities();
+                foreach (City city in cities)
+                {
+                    city.Timestamp =  (int)city.CreatedAt.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
+                }
                 return Ok(cities);
                     
             }catch (Exception ex)
@@ -110,9 +114,5 @@ namespace BrowseClimate.Controllers
 
 
         }
-
-
-
-
     }
 }

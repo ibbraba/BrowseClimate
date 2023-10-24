@@ -226,6 +226,10 @@ namespace BrowseClimate.Controllers
             try
             {
                 List<Article> articles = await _articleService.GetDiscoverArticles(userId); 
+                foreach (Article article in articles)
+                {
+                    article.Timestamp = (int)article.CreatedAt.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
+                }
                 return Ok(articles);
 
             }

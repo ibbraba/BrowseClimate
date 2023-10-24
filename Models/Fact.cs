@@ -14,6 +14,8 @@
 
         public int Likes { get; set; }
 
+        public int Timestamp { get; set; }
+
 
     }
 }

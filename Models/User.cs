@@ -12,6 +12,8 @@
         public DateTime CreatedAt { get; set; }
         public int FavoriteCity { get; set; }
 
+        public int Timestemp { get; set; }   
+
 
         public override string ToString()
         {

@@ -25,6 +25,7 @@ namespace BrowseClimate.Services.FactServices
 
         public async Task CreateFact(Fact fact)
         {
+            fact.CreatedAt = DateTime.Now;
             await _factRepository.CreateFact(fact);
         }
 
