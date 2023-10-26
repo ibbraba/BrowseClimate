@@ -58,6 +58,13 @@ namespace BrowseClimate.Services.ArticleServices
             }
 
             List<Article> articles = await _articleRepository.GetAllArticles();
+            foreach(Article article in articles)
+            {
+                article.Likes = await GetLikesOnArticle(article.Id);
+              
+            }
+
+
             return articles;
         }
 
@@ -65,6 +72,8 @@ namespace BrowseClimate.Services.ArticleServices
         {
             Article article = await _articleRepository.GetArticle(id);
             article.Timestamp = (int)article.CreatedAt.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
+            article.Likes = await GetLikesOnArticle(id);
+
             return article;
         }
 
@@ -160,10 +169,10 @@ namespace BrowseClimate.Services.ArticleServices
 
    
 
-        public async Task<List<User>> GetLikesOnArticle(int articleId)
+        public async Task<int> GetLikesOnArticle(int articleId)
         {
             List<User> articles = await _articleRepository.GetLikesOnArticle(articleId);
-            return articles;
+            return articles.Count;
 
         }
 
@@ -171,6 +180,22 @@ namespace BrowseClimate.Services.ArticleServices
      
 
         //ADD LIKE 
+
+        public async Task AddLike(int articleId, int userId)
+        {
+            await _articleRepository.AddLike(articleId, userId);
+            
+        }
+
+        public async Task RemoveLike(int articleId, int userId)
+        {
+            await _articleRepository.RemoveLike(articleId, userId);
+        }
+
+        Task<List<User>> IArticleService.GetLikesOnArticle(int articleId)
+        {
+            throw new NotImplementedException();
+        }
 
 
         //ADD RATE

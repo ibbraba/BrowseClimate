@@ -52,8 +52,6 @@ namespace BrowseClimate.Controllers
       
             try
             {
-          
-
                 int articleID = await _articleService.CreateArticle(article);
                 article.Id = articleID;
                 return Ok(article);
@@ -243,10 +241,43 @@ namespace BrowseClimate.Controllers
 
         }
 
+        [HttpPost]
+        [Route("AddLike")]
+        public async Task<IActionResult> AddLike(int articleId, int userId)
+        {
+
+            try
+            {
+                await _articleService.AddLike(articleId, userId);
+                return Ok();
+
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+
+            }
 
 
+        }
 
-  
+        [HttpPost]
+        [Route("RemoveLike")]
+        public async Task<IActionResult> RemoveLike(int articleId, int userId)
+        {
+            try
+            {
+                await _articleService.RemoveLike(articleId, userId);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest();
+            }
+        }
+
 
     }
 }

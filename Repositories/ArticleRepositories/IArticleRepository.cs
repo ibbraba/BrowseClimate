@@ -23,6 +23,10 @@ namespace BrowseClimate.Repositories.ArticleRepositories
 
         Task<List<Article>> GetArticlesLikedByUser(int userId);
 
+        Task AddLike(int articleId, int userId);
+
+        Task RemoveLike(int articleId, int userId);
+
 
 
     }

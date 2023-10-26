@@ -28,6 +28,10 @@ namespace BrowseClimate.Services.ArticleServices
 
         Task <List<User>> GetLikesOnArticle(int articleId);
 
+        Task AddLike(int articleId, int userId);
+
+        Task RemoveLike(int articleId, int userId);
+
 
     }
 }

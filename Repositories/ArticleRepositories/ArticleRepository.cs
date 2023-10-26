@@ -1,6 +1,7 @@
 ﻿using BrowseClimate.Helpers;
 using BrowseClimate.Models;
 using Dapper;
+using Microsoft.AspNetCore.Mvc;
 using System.Data;
 
 namespace BrowseClimate.Repositories.ArticleRepositories
@@ -142,7 +143,26 @@ namespace BrowseClimate.Repositories.ArticleRepositories
 
 
         
+        public async Task AddLike(int articleId, int userId)
+        {
+            
 
+            using (IDbConnection db = DBHelper.connectToDB())
+            {
+                var output = await db.ExecuteAsync("dbo.SpArticle_AddLike", new { articleId, userId}, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+
+        public async Task RemoveLike(int articleId, int userId)
+        {
+
+
+            using (IDbConnection db = DBHelper.connectToDB())
+            {
+                var output = await db.ExecuteAsync("dbo.SpArticle_RemoveLike", new { articleId, userId }, commandType: CommandType.StoredProcedure);
+            }
+        }
 
     }
 }
