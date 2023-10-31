@@ -18,6 +18,7 @@ namespace BrowseClimate.Repositories.UserRepositories
             string pseudo = user.Pseudo;
             string password = user.Password;
             string role = user.Role;
+            int favoriteCity = user.FavoriteCity;
             DateTime CreatedAt = user.CreatedAt;
 
             using (IDbConnection db = DBHelper.connectToDB())
@@ -29,7 +30,8 @@ namespace BrowseClimate.Repositories.UserRepositories
                     pseudo,
                     password,
                     role,
-                    CreatedAt
+                    CreatedAt,
+                    favoriteCity,
                 }, commandType: CommandType.StoredProcedure);
 
             }
@@ -72,6 +74,18 @@ namespace BrowseClimate.Repositories.UserRepositories
             }
         }
 
+        public async Task UpdateFavoriteCity(int cityId, int userId)
+        {
+            
+            using (IDbConnection db = DBHelper.connectToDB())
+            {
+                var output = await db.ExecuteAsync("dbo.SpUsers_UpdateFavoriteCity", new { cityId, userId }, commandType: CommandType.StoredProcedure);
+                
+            }
+
+
+        }
+
         public async Task UpdateUser(User user)
         {
             int id = user.Id;
@@ -80,6 +94,7 @@ namespace BrowseClimate.Repositories.UserRepositories
             string email = user.Email;
             string pseudo = user.Pseudo;
             string password = user.Password;
+            int favoriteCity = user.FavoriteCity;
        
 
             using (IDbConnection db = DBHelper.connectToDB())
@@ -90,7 +105,8 @@ namespace BrowseClimate.Repositories.UserRepositories
                     firstname,
                     email,
                     pseudo,
-                    password
+                    password,
+                    favoriteCity
                 }, commandType: CommandType.StoredProcedure);
             }
         }

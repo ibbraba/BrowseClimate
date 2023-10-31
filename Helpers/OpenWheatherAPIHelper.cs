@@ -13,24 +13,34 @@ namespace BrowseClimate.Helpers
 
         public static string API_KEY; 
 
-        public static async Task<double> GetWheather(City city)
+        public static async Task<double>? GetWheather(City city)
         {
 
+            try
+            {
+                string cityName = city.Name.Trim();
+                cityName = cityName.Replace(" ", "_");
+
+                string url = BASE_URL + cityName + "&appid=" + API_KEY + "&units=metric";
+
+                HttpClient httpClient = new HttpClient();
+                var req = await httpClient.GetAsync(url);
+
+                var res = await req.Content.ReadAsStringAsync();
+                JObject response = JObject.Parse(res);
+
+                var temperature = response["main"]["temp"];
+                return (double)temperature;
+            }
+            catch (Exception ex)
+            {
+                return double.MinValue;
+            }
+
          
-            string cityName = city.Name.Trim();
-            cityName = cityName.Replace(" ", "_");  
+     
 
-            string url = BASE_URL + cityName + "&appid=" + API_KEY + "&units=metric";
-
-            HttpClient httpClient = new HttpClient();
-            var req = await httpClient.GetAsync(url);
-
-            var res = await req.Content.ReadAsStringAsync();
-            JObject response = JObject.Parse(res);
-
-            return (double)response["main"]["temp"];
-
-
+          
 
         }
 

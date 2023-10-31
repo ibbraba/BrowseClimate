@@ -106,7 +106,7 @@ namespace BrowseClimate.Controllers
         }
 
 
-        [HttpPost]
+        [HttpDelete]
         [Route("Delete")]
         [Authorize]
         public async Task<IActionResult> Delete(int id)
@@ -159,59 +159,50 @@ namespace BrowseClimate.Controllers
             catch (Exception ex)
             {
 
-                return BadRequest(ex.Message);
+                return BadRequest(ex);
             }
 
         }
 
-        [HttpPut]
-        [Route("Comment/Update")]
-        [Authorize]
-        public async Task<IActionResult>  UpdateComment(Comment comment)
-        {
-            try
-            {
-                await _commentService.UpdateComment(comment);
-                return Ok("Comment updated with success");
-            }catch(Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-      
-        }
 
-        [HttpDelete]
-        [Route("Comment/Delete")]
-        [Authorize]
-        public async Task<IActionResult> DeleteComment(int id)
-        {
-            try
-            {
-                await _commentService.DeleteComment(id);
-                return Ok("Comment deleted with success");
-            }catch(Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
 
         [HttpGet]
-        [Route("Comment/Create")]
-        [Authorize]
-        public async Task<IActionResult> CreateComment(Comment comment, int articleId)
+        [Route("GetCityArticle")]
+        public async Task<IActionResult> GetCityArticles(int cityId)
         {
             try
             {
-                await _commentService.CreateComment(comment, articleId);
-                return Ok("Comment created with success!");
-                
-                
+                List<Article> articles = await _articleService.GetAllArticles();
+                articles = articles.Where(x => x.CityId == cityId).ToList();
+                return Ok(articles);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+
+
+
+
+        [HttpPost]
+        [Route("GetArticlesLikedByUser")]
+        public async Task<IActionResult> GetArticlesLikedByUser(int userId)
+        {
+            try
+            {
+
+                List<Article> articles = await _articleService.GetArticlesLikedByUser(userId);
+                return Ok(articles);
+
+
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                return BadRequest(ex);
             }
-
 
         }
 

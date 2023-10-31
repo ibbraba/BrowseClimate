@@ -15,5 +15,7 @@ namespace BrowseClimate.Repositories.UserRepositories
 
         Task<List<User>> GetAll();
 
+        Task UpdateFavoriteCity(int cityId, int userId);
+
     }
 }

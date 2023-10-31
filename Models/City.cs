@@ -25,5 +25,7 @@
 
         public int Timestamp { get; set; } 
 
+        public int Note { get; set; }
+
     }
 }

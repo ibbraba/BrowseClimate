@@ -86,7 +86,7 @@ namespace BrowseClimate.Services.ArticleServices
         {
             
             //User Articles
-            List<Article> Userarticle = await _articleRepository.GetUserArticles(userId);
+           List<Article> Userarticle = await _articleRepository.GetUserArticles(userId);
             List<Article> topArticles = await _articleRepository.GetTopArticles();
             List<Article> likedArticles = await _articleRepository.GetArticlesLikedByUser(userId);
 
@@ -94,34 +94,54 @@ namespace BrowseClimate.Services.ArticleServices
             //Articles Liked by user
 
             List<Article> discoverArticles = new();
-            discoverArticles.AddRange(Userarticle);
 
-            foreach(Article article in topArticles)
+            if(Userarticle != null)
             {
-                 Article topArticle = discoverArticles.Find(x => x.Id == article.Id);
-
-                if (topArticle == null)
-                {
-                    discoverArticles.Add(article);
-                }
+                discoverArticles.AddRange(Userarticle);
 
             }
 
-            foreach (Article article in likedArticles)
+            if(topArticles != null)
             {
-                Article likedArticle = discoverArticles.Find(x => x.Id == article.Id);
-
-                if (likedArticle == null)
+                foreach (Article article in topArticles)
                 {
-                    discoverArticles.Add(article);
+                    Article topArticle = discoverArticles.Find(x => x.Id == article.Id);
+
+
+                    if (topArticle == null)
+                    {
+                        discoverArticles.Add(article);
+                    }
+
+                }
+            }
+
+
+            if (likedArticles != null)
+            {
+                foreach (Article article in likedArticles)
+                {
+                    Article likedArticle = discoverArticles.Find(x => x.Id == article.Id);
+
+                    if (likedArticle == null)
+                    {
+                        discoverArticles.Add(article);
+                    }
+
                 }
 
             }
+            
      
 
             discoverArticles = discoverArticles.Distinct().ToList();
             discoverArticles = discoverArticles.OrderBy(x => x.CreatedAt).ToList();
             discoverArticles = discoverArticles.AsEnumerable().Reverse().ToList();
+            foreach (Article article in discoverArticles)
+            {
+                article.Likes = await GetLikesOnArticle(article.Id);
+
+            }
 
 
 
@@ -134,7 +154,13 @@ namespace BrowseClimate.Services.ArticleServices
         public async Task<List<Article>> GetUserArticles(int id)
         {
             List<Article> articles = await _articleRepository.GetUserArticles(id);
-            
+            foreach (Article article in articles)
+            {
+                article.Likes = await GetLikesOnArticle(article.Id);
+
+            }
+
+
             return articles;
         }
 
@@ -164,6 +190,12 @@ namespace BrowseClimate.Services.ArticleServices
         async Task<List<Article>> IArticleService.GetTopArticles()
         {
             List<Article> articles = await _articleRepository.GetTopArticles();
+            foreach (Article article in articles)
+            {
+                article.Likes = await GetLikesOnArticle(article.Id);
+
+            }
+
             return articles;
         }
 
@@ -176,8 +208,21 @@ namespace BrowseClimate.Services.ArticleServices
 
         }
 
-   
-     
+
+        public async Task<List<Article>> GetArticlesLikedByUser(int userId)
+        {
+            List<Article> articles = await _articleRepository.GetArticlesLikedByUser(userId);
+            foreach (Article article in articles)
+            {
+                article.Likes = await GetLikesOnArticle(article.Id);
+
+            }
+
+
+            return articles;
+        }
+
+
 
         //ADD LIKE 
 

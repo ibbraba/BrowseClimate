@@ -40,6 +40,8 @@ namespace BrowseClimate.Services.CityServices
         {
          
             double wheather = await OpenWheatherAPIHelper.GetWheather(city);
+
+
             return wheather;
         }
 
@@ -77,25 +79,30 @@ namespace BrowseClimate.Services.CityServices
         public async Task<City> GetCity(int id)
         {
          
-            
-            City city = await _cityRepository.GetCity(id);
-
-            city.TimeZone = await GetLocalTime(city);
             try
             {
+                City city = await _cityRepository.GetCity(id);
+                city.TimeZone = await GetLocalTime(city);
                 double wheather = await GetWheather(city);
-            
+                
+                if(wheather != double.MinValue)
+                {
                 city.Temperature = Convert.ToInt32(wheather);
 
-                
-            }
-            catch
-            {
+                }
 
+                city.Note = await GetCityNote(id);
+                return city;
+
+
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
 
             
-            return city;
+           
         }
 
         public async Task UpdateCity(City city)
@@ -112,6 +119,43 @@ namespace BrowseClimate.Services.CityServices
             }
         }
 
+        public async Task<int> GetUserNote(int cityId, int userId)
+        {
+            int note = await _cityRepository.GetUserNote(cityId, userId);
+            return note;
+        }
+
+        public async Task AddNote(int cityId, int userId, int note)
+        {
+            await _cityRepository.AddNote(cityId, userId, note);    
+
+        }
+
+        public async Task UpdateNote(int cityId, int userId, int note)
+        {
+            await _cityRepository.UpdateNote(cityId, userId, note); 
+        }
+
+        public async Task<int> GetCityNote(int cityId)
+        {
+            List<int> cityNotes = await _cityRepository.GetCityNotes(cityId);
+            int total = 0;
+            foreach (int note in cityNotes)
+            {
+                total += note;
+            }
+            if (cityNotes.Count > 0)
+            {
+
+                int avg = total / cityNotes.Count;
+                return avg;
+
+            }
+            else return 0;
+
+        }
+
         
+
     }
 }

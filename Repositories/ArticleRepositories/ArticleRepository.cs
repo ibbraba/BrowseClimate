@@ -17,14 +17,13 @@ namespace BrowseClimate.Repositories.ArticleRepositories
             string content = article.Content;
             DateTime createdAt = article.CreatedAt;
             DateTime updatedAt = article.UpdatedAt;
+            int cityId = article.CityId;
 
 
             using (IDbConnection db = DBHelper.connectToDB())
             {
 
-
-
-                var articleId = await db.QuerySingleOrDefaultAsync<int>("dbo.SpArticle_CreateArticle", new { createdBy, title, description, content, createdAt, updatedAt }, commandType: CommandType.StoredProcedure); ;
+                var articleId = await db.QuerySingleOrDefaultAsync<int>("dbo.SpArticle_CreateArticle", new { createdBy, title, description, content, createdAt, updatedAt, cityId }, commandType: CommandType.StoredProcedure); ;
                 return articleId;
 
             }
@@ -70,6 +69,8 @@ namespace BrowseClimate.Repositories.ArticleRepositories
 
                 var output = await db.QueryAsync<int>("dbo.SpArticleLike_GetUserLikes", new { userId }, commandType: CommandType.StoredProcedure);
                 
+                
+   
                 foreach(int id in output)
                 {
                     var article = await db.QuerySingleAsync<Article>("dbo.SpArticle_FindArticleWithId", new { id }, commandType: CommandType.StoredProcedure) ;

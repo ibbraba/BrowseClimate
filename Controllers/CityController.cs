@@ -40,7 +40,6 @@ namespace BrowseClimate.Controllers
                 
         }
 
-
         [HttpGet]
         [Route("GetAll")]
         public async Task<IActionResult> GetAllCities()
@@ -60,6 +59,8 @@ namespace BrowseClimate.Controllers
             }
 
         }
+
+
 
         [HttpPost]
         [Route("Create")]
@@ -113,6 +114,65 @@ namespace BrowseClimate.Controllers
             }
 
 
+        }
+
+
+
+
+        [HttpPost]
+        [Route("GetUserNote")]
+
+        public async Task<IActionResult> GetUserNote(int cityId, int userId)
+        {
+            try
+            {
+                int note = await _cityService.GetUserNote(cityId, userId);
+      
+                return Ok(note);
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex);
+            }
+
+
+        }
+
+
+
+        [HttpPost]
+        [Route("AddNote")]
+
+        public async Task<IActionResult> AddNote(int cityId, int userId, int note)
+        {
+            try
+            {
+                 await _cityService.AddNote(cityId, userId, note);
+                return Ok(note);
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex);
+            }
+        }
+
+
+        [HttpPost]
+        [Route("UpdateNote")]
+
+        public async Task<IActionResult> UpdateNote(int cityId, int userId, int note)
+        {
+            try
+            {
+                await _cityService.UpdateNote(cityId, userId, note);
+                return Ok(note);
+            }
+            catch (Exception ex)
+            {
+              return BadRequest(ex);
+            }
         }
     }
 }

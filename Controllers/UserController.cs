@@ -174,7 +174,26 @@ namespace BrowseClimate.Controllers
             }
           
         }
-        
+
+
+        [HttpGet]
+        [Route("UpdateFavoriteCity")]
+           
+        public async Task<IActionResult> UpdateFavoriteCity(int cityId, int userId)
+        {
+
+            try
+            {
+                await _userService.UpdateFavoriteCity(cityId, userId);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex);
+            }
+
+        }
 
     }
 }

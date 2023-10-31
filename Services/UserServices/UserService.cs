@@ -50,6 +50,12 @@ namespace BrowseClimate.Services.UserServices
         }
 
 
+        public async Task UpdateFavoriteCity(int cityId, int userId)
+        {
+            await _userRepository.UpdateFavoriteCity(cityId, userId);
+        }
+
+
  
         public void ValidatePassword(User user)
         {

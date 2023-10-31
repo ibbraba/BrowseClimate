@@ -72,11 +72,58 @@ namespace BrowseClimate.Repositories.CityRepositories
 
             using (System.Data.IDbConnection db = DBHelper.connectToDB())
             {
-                var output = db.ExecuteAsync("dbo.SpCity_EditCity", new { id, name, country, numberResidents }, commandType: CommandType.StoredProcedure);
+                var output = await db.ExecuteAsync("dbo.SpCity_EditCity", new { id, name, country, numberResidents }, commandType: CommandType.StoredProcedure);
     
             }
 
 
+        }
+
+
+
+        public async Task AddNote(int cityId, int userId, int note)
+        {
+
+            
+
+            using (System.Data.IDbConnection db = DBHelper.connectToDB())
+            {
+                var output = await db.ExecuteAsync("dbo.SpCityNote_AddNote", new { cityId, userId, note}, commandType: CommandType.StoredProcedure);
+
+            }
+
+
+        }
+
+        public async Task UpdateNote(int cityId, int userId, int note)
+        {
+
+            using (System.Data.IDbConnection db = DBHelper.connectToDB())
+            {
+                var output = await db.ExecuteAsync("dbo.SpCityNote_EditNote", new { cityId, userId, note }, commandType: CommandType.StoredProcedure);
+
+            }
+        }
+
+        public async Task<int> GetUserNote(int cityId, int userId)
+        {
+
+            using (System.Data.IDbConnection db = DBHelper.connectToDB())
+            {
+                var output = await db.QuerySingleOrDefaultAsync<int>("dbo.SpCityNote_GetUserNote", new { cityId, userId}, commandType: CommandType.StoredProcedure);
+                return output;
+
+            }
+        }
+
+        public async Task<List<int>> GetCityNotes(int cityId)
+        {
+            using (System.Data.IDbConnection db = DBHelper.connectToDB())
+            {
+                var output = await db.QueryAsync<int>("dbo.SpCity_GetCityNotes", new { cityId }, commandType: CommandType.StoredProcedure);
+                return output.ToList();
+
+            }
         }
     }
 }
