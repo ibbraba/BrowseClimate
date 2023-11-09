@@ -34,16 +34,16 @@ namespace BrowseClimate.Controllers
 
         [HttpPost]
         [Route("Create")]
-        [Authorize]
+   
         public async Task<IActionResult> CreateUser(User user)
         {
             try {
 
-                _userService.CreateUser(user);
-                return Ok("User succesfully created " +user);
+                await _userService.CreateUser(user);
+                return Ok("User succesfully created " + user);
             } catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                return BadRequest(ex.Message);
             }
 
         }

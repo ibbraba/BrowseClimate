@@ -61,7 +61,10 @@ namespace BrowseClimate.Services.ArticleServices
             foreach(Article article in articles)
             {
                 article.Likes = await GetLikesOnArticle(article.Id);
-              
+                article.Timestamp = ((DateTimeOffset)article.CreatedAt).ToUnixTimeSeconds();
+
+                
+
             }
 
 
@@ -140,6 +143,9 @@ namespace BrowseClimate.Services.ArticleServices
             foreach (Article article in discoverArticles)
             {
                 article.Likes = await GetLikesOnArticle(article.Id);
+                article.Timestamp = ((DateTimeOffset)article.CreatedAt).ToUnixTimeSeconds();
+
+                
 
             }
 

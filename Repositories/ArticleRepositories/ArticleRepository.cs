@@ -134,11 +134,14 @@ namespace BrowseClimate.Repositories.ArticleRepositories
             string title = article.Title;
             string description = article.Description;
             string content = article.Content;
+            int cityId = article.CityId;
+
+
 
 
             using (IDbConnection db = DBHelper.connectToDB())
             {
-                var output = await db.ExecuteAsync("dbo.SpArticle_EditArticle", new { id, title, description, content }, commandType: CommandType.StoredProcedure);
+                var output = await db.ExecuteAsync("dbo.SpArticle_EditArticle", new { id, title, description, content, cityId }, commandType: CommandType.StoredProcedure);
             }
         }
 
@@ -164,6 +167,8 @@ namespace BrowseClimate.Repositories.ArticleRepositories
                 var output = await db.ExecuteAsync("dbo.SpArticle_RemoveLike", new { articleId, userId }, commandType: CommandType.StoredProcedure);
             }
         }
+
+
 
     }
 }

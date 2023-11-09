@@ -3,6 +3,7 @@ using BrowseClimate.Repositories.UserRepositories;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.IdentityModel.Tokens.Jwt;
+using System.Reflection.Metadata.Ecma335;
 using System.Security.Claims;
 using System.Text;
 
@@ -30,12 +31,36 @@ namespace BrowseClimate.Services.UserServices
 
         public async Task CreateUser(User user)
         {
-            ValidateUser(user);
-            //ENCRYPT Password
-            user.Role = UserRolesEnum.ROLE_USER;
-            user.CreatedAt = DateTime.Now;
+            try
+            {
+                 await ValidateUser(user);
+              
+                 ValidatePassword(user);
+ 
+                 HashPassword hashPassword = new();
 
-            await _userRepository.CreateUser(user);
+                 string hashedpassword = hashPassword.Generate(user.Password);
+ 
+                 user.Password = hashedpassword;
+        
+                 user.Role = UserRolesEnum.ROLE_USER;
+                 user.CreatedAt = DateTime.Now;
+                 await _userRepository.CreateUser(user);
+
+
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+                
+
+
+
+            //ENCRYPT Password
+
+            
+
         }
 
         public async Task DeleteUser(int id)
@@ -59,11 +84,35 @@ namespace BrowseClimate.Services.UserServices
  
         public void ValidatePassword(User user)
         {
-            throw new NotImplementedException();
+
+            if(user.Password.Length < 6)
+            {
+                throw new ArgumentException("Veuillez indiquez un mot de passe d'au moins 6 caractères");
+            }
+
+     
         }
 
-        public void ValidateUser(User user)
+        public async Task ValidateUser(User user)
         {
+            List<User> users = await _userRepository.GetAll();
+
+            foreach (User DBUser in users)
+            {
+                if (DBUser.Pseudo.Trim() == user.Pseudo) {
+
+                    throw new Exception("Pseudonyme déja utilisé. Veuillez en choisir un autre");
+
+                }
+
+
+                if (DBUser.Email.Trim() == user.Email)
+                {
+                    throw new Exception("Cette adresse email est déja associée à un compte");
+
+                }
+                
+            }
 
         }
 
@@ -89,18 +138,32 @@ namespace BrowseClimate.Services.UserServices
 
         public async Task<string> LoginUser(string login, string password)
         {
-           
-             User user = await FindUserWithPseudo(login);
-
-            if (user != null)
+            try
             {
-                if (user.Password.Trim() == password)
+                HashPassword hashPassword = new();
+                User user = await FindUserWithPseudo(login);
+
+                if (user != null)
                 {
-                     string jwt = CreateToken(user);
-                    return jwt;
+                    string DBPassword = user.Password.Trim();
+
+                    bool okPassword = hashPassword.IsValid(password, DBPassword);
+
+                    if (okPassword == true)
+                    {
+                        string jwt = CreateToken(user);
+                        return jwt;
+                    }
+                    else throw new Exception("Identifiants invalides");
                 }
-                else return null;
-            } else return null;
+                else throw new Exception("Identifiants invalides");
+            }
+            catch (Exception Ex)
+            {
+
+                throw new Exception(Ex.Message);
+            }
+    
         }
 
         public void TestError()

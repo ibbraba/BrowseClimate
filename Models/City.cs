@@ -27,5 +27,7 @@
 
         public int Note { get; set; }
 
+        public int NumberFans { get; set; }
+
     }
 }

@@ -79,6 +79,15 @@ namespace BrowseClimate.Repositories.CityRepositories
 
         }
 
+        public async Task<int> GetNumberFans(int cityId)
+        {
+            using (System.Data.IDbConnection db = DBHelper.connectToDB())
+            {
+                var output = await db.QuerySingleOrDefaultAsync<int>("dbo.SpCity_GetNumberFans", new { cityId }, commandType: CommandType.StoredProcedure);
+                return output;
+
+            }
+        }
 
 
         public async Task AddNote(int cityId, int userId, int note)

@@ -40,8 +40,6 @@ namespace BrowseClimate.Services.CityServices
         {
          
             double wheather = await OpenWheatherAPIHelper.GetWheather(city);
-
-
             return wheather;
         }
 
@@ -66,6 +64,7 @@ namespace BrowseClimate.Services.CityServices
             {
                 city.TimeZone = await GetLocalTime(city);
                 city.Facts = await _factService.GetCityFacts(city.Id);
+                city.NumberFans = await _cityRepository.GetNumberFans(city.Id);
             }
 
             //TODO Add Timezone
@@ -92,6 +91,7 @@ namespace BrowseClimate.Services.CityServices
                 }
 
                 city.Note = await GetCityNote(id);
+                city.NumberFans = await _cityRepository.GetNumberFans(city.Id);
                 return city;
 
 

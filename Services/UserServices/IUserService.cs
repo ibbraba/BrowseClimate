@@ -11,7 +11,7 @@ namespace BrowseClimate.Services.UserServices
 
         Task DeleteUser(int id);
 
-        void ValidateUser(User user);
+        Task ValidateUser(User user);
 
         string EncryptUserPassword(string password);
 

@@ -22,6 +22,8 @@ namespace BrowseClimate.Repositories.CityRepositories
 
         Task<List<int>> GetCityNotes(int cityId);
 
-        
+        Task<int> GetNumberFans(int cityId);
+
+
     }
 }

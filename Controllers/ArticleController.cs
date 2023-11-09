@@ -51,9 +51,12 @@ namespace BrowseClimate.Controllers
         {
       
             try
-            {
+             {
+                article.Views = 0;
+
                 int articleID = await _articleService.CreateArticle(article);
                 article.Id = articleID;
+
                 return Ok(article);
 
             }catch (Exception ex)
@@ -89,15 +92,9 @@ namespace BrowseClimate.Controllers
         [Authorize]
         public async Task<IActionResult> Update (Article article)
         {
-
-            
-            article.Title = "Updated";
-            Article articleToEdit = await _articleService.GetArticle(7);
-
-
             try
             {
-                await _articleService.UpdateArticle(articleToEdit);   
+                await _articleService.UpdateArticle(article);   
                 return Ok(article); 
             }catch(Exception ex)
             {
@@ -215,10 +212,7 @@ namespace BrowseClimate.Controllers
             try
             {
                 List<Article> articles = await _articleService.GetDiscoverArticles(userId); 
-                foreach (Article article in articles)
-                {
-                    article.Timestamp = (int)article.CreatedAt.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
-                }
+             
                 return Ok(articles);
 
             }
