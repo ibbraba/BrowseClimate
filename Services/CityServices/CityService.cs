@@ -65,6 +65,14 @@ namespace BrowseClimate.Services.CityServices
                 city.TimeZone = await GetLocalTime(city);
                 city.Facts = await _factService.GetCityFacts(city.Id);
                 city.NumberFans = await _cityRepository.GetNumberFans(city.Id);
+                double wheather = await GetWheather(city);
+                city.Note = await GetCityNote(city.Id);
+
+                if (wheather != double.MinValue)
+                {
+                    city.Temperature = Convert.ToInt32(wheather);
+
+                }
             }
 
             //TODO Add Timezone
