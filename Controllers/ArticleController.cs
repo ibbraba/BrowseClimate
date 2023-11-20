@@ -1,7 +1,7 @@
 ﻿using BrowseClimate.Helpers;
 using BrowseClimate.Models;
 using BrowseClimate.Services.ArticleServices;
-using BrowseClimate.Services.CommentService;
+
 using BrowseClimate.Services.UserServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +17,6 @@ namespace BrowseClimate.Controllers
 
         private readonly IConfiguration _configuration;
         private ArticleService _articleService;
-        private readonly CommentService _commentService;
         private UserService _userService;
 
 
@@ -26,7 +25,6 @@ namespace BrowseClimate.Controllers
         public ArticleController(IConfiguration configuration)
         {
             _articleService = new ArticleService();
-            _commentService = new CommentService();
 
             _configuration = configuration;
             _userService = new UserService(_configuration);
@@ -72,13 +70,9 @@ namespace BrowseClimate.Controllers
             try
             {
                 Article article = await _articleService.GetArticle(id);
-                if (article != null)
-                {
-                    List<Comment> comments = await _commentService.GetAllCommentsForArticle(article.Id);
-                    article.Comments = comments;
+           
                     return Ok(article);
-                }
-                else return BadRequest("Article not found");
+    
             
             }catch(Exception ex)
             {
@@ -128,12 +122,6 @@ namespace BrowseClimate.Controllers
             try
             {
                 List<Article> articles = await _articleService.GetAllArticles();
-                foreach (Article article in articles)
-                {
-                     List<Comment> comments =  await _commentService.GetAllCommentsForArticle(article.Id);
-                     article.Comments = comments;
-
-                }
 
                 return Ok(articles);
             }

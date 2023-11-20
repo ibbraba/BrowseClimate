@@ -92,8 +92,6 @@ namespace BrowseClimate.Repositories.UserRepositories
             string name = user.Name;
             string firstname = user.FirstName;
             string email = user.Email;
-            string pseudo = user.Pseudo;
-            string password = user.Password;
             int favoriteCity = user.FavoriteCity;
        
 
@@ -104,8 +102,7 @@ namespace BrowseClimate.Repositories.UserRepositories
                     name,
                     firstname,
                     email,
-                    pseudo,
-                    password,
+            
                     favoriteCity
                 }, commandType: CommandType.StoredProcedure);
             }

@@ -18,5 +18,7 @@ namespace BrowseClimate.Repositories.FactRepository
         public Task AddLike(int factId, int userId);
         public Task DeleteLike(int factId, int userId);
 
+        public Task<List<int>> GetUserLikes(int userId);
+
     }
 }

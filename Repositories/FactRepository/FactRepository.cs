@@ -101,5 +101,14 @@ namespace BrowseClimate.Repositories.FactRepository
             }
         }
 
+        public async Task<List<int>> GetUserLikes(int userId)
+        {
+            using (IDbConnection db = DBHelper.connectToDB())
+            {
+                var output = await db.QueryAsync<int>("dbo.SpFact_GetUserLikes", new { userId}, commandType: CommandType.StoredProcedure);
+                return output.ToList();
+            }
+        }
     }
+    
 }

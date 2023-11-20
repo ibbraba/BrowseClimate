@@ -101,14 +101,14 @@ namespace BrowseClimate.Services.UserServices
             {
                 if (DBUser.Pseudo.Trim() == user.Pseudo) {
 
-                    throw new Exception("Pseudonyme déja utilisé. Veuillez en choisir un autre");
+                    throw new ArgumentException("Pseudonyme déja utilisé. Veuillez en choisir un autre");
 
                 }
 
 
                 if (DBUser.Email.Trim() == user.Email)
                 {
-                    throw new Exception("Cette adresse email est déja associée à un compte");
+                    throw new ArgumentException("Cette adresse email est déja associée à un compte");
 
                 }
                 
@@ -169,9 +169,6 @@ namespace BrowseClimate.Services.UserServices
         public void TestError()
         {
             throw new Exception("test error in req");
-            
-            
-
         }
 
         public string CreateToken(User user)

@@ -34,6 +34,24 @@ namespace BrowseClimate.Controllers
 
         }
 
+
+        [HttpGet]
+        [Route("UserLikes")]
+        public async Task<IActionResult> GetUserLikes(int userId)
+        {
+            try
+            {
+                List<int> factIds = await _factService.GetUserLikes(userId); 
+                return Ok(factIds);
+                
+
+            }catch(Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+
         [HttpPost]
         [Route("Delete")]
         public async Task<IActionResult> Delete(int factId)

@@ -56,5 +56,11 @@ namespace BrowseClimate.Services.FactServices
         {
             await _factRepository.UpdateFact(fact);
         }
+
+        public async Task<List<int>> GetUserLikes(int userId)
+        {
+            List<int> factIds = await _factRepository.GetUserLikes(userId);
+            return factIds;
+        }
     }
 }
